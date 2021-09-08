@@ -8,7 +8,9 @@ print("hola")
 print("hola")
 print("hola")
 print("hola")
-print("hola")
+print("chao")
+print("chao")
+print("chao")
 
 
 #Inicializar modelo
