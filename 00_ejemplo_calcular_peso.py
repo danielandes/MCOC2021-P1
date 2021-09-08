@@ -14,6 +14,11 @@ ret.agregar_nodo(0,0)
 ret.agregar_nodo(1,0)
 ret.agregar_nodo(1,1)
 
+# print (ret)
+
+#exit(0)
+
+
 #Seccion
 circular_200_40 = Circular(200*mm_, 4*mm_)
 
@@ -21,6 +26,7 @@ circular_200_40 = Circular(200*mm_, 4*mm_)
 b1 = Barra(0, 1, circular_200_40)
 b2 = Barra(1, 2, circular_200_40)
 b3 = Barra(0, 2, circular_200_40)
+
 
 ret.agregar_barra(b1)
 ret.agregar_barra(b2)

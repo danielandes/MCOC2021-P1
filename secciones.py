@@ -47,3 +47,29 @@ class Circular(object):
         
         return f"Sección Circular D = {self.D} Dint = {self.Dint}"
 
+
+
+# Mas adelante, no es para P1E1
+class SeccionICHA(object):
+    
+    """Lee la tabla ICHA y genera una seccion apropiada"""
+
+    def __init__(self, denominacion):
+        super(SeccionICHA, self).__init__()
+        self.denominacion = denominacion
+
+    def area(self):
+        return 0
+    
+    def peso(self):        
+        return 0
+
+    def inercia_xx(self):
+        return 0
+
+    def inercia_yy(self):  
+        return 0
+
+    def __str__(self):
+ 
+        return f"Sección ICHA {self.denominacion}"  

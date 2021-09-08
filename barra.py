@@ -24,7 +24,17 @@ class Barra(object):
         
         """Implementar"""	
         
-        return 0
+        ni = self.ni
+        nj = self.nj
+
+        xi = reticulado.xyz[ni,:]
+        xj = reticulado.xyz[nj,:]
+
+        #print (f"Barra {ni} a {nj} xi = {xi} xj = {xj}")
+
+        largo = np.linalg.norm(xi-xj)
+
+        return largo
 
     def calcular_peso(self, reticulado):
         """Devuelve el largo de la barra. 
@@ -32,8 +42,9 @@ class Barra(object):
         xj : Arreglo numpy de dimenson (3,) con coordenadas del nodo j
         """
         
-        """Implementar"""	
-        
+        """Implementar"""
+
+
         return 0
 
 
