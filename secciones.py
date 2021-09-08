@@ -8,31 +8,42 @@ class Circular(object):
         super(Circular, self).__init__()
         """Implementar"""	
 
+        self.D = D
+        self.Dint = Dint
+
     def area(self):
         
+
         """Implementar"""	
-        
-        return 0
+
+        return pi*(self.D**2 - self.Dint**2)/4
+    
 
     def peso(self):
 
         
         """Implementar"""	
         
-        return 0
+        return self.area()*ρ_acero*g
 
     def inercia_xx(self):
 
         
         """Implementar"""	
         
-        return 0
+        return pi*(self.D**4 - self.Dint**4)/4
 
     def inercia_yy(self):
 
         
         """Implementar"""	
         
-        return 0
+        return self.inercia_xx()
 
+    def __str__(self):
+
+        
+        """Implementar"""   
+        
+        return f"Sección Circular D = {self.D} Dint = {self.Dint}"
 
