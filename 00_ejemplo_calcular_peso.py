@@ -4,6 +4,11 @@ from graficar2d import ver_reticulado_2d
 from constantes import *
 from secciones import Circular
 
+print("hola")
+print("hola")
+print("hola")
+print("hola")
+print("hola")
 
 
 #Inicializar modelo
