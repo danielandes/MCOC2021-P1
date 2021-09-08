@@ -27,6 +27,10 @@ b1 = Barra(0, 1, circular_200_40)
 b2 = Barra(1, 2, circular_200_40)
 b3 = Barra(0, 2, circular_200_40)
 
+print (b1.calcular_peso(ret))
+print (b2.calcular_peso(ret))
+print (b3.calcular_peso(ret))
+
 
 ret.agregar_barra(b1)
 ret.agregar_barra(b2)

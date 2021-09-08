@@ -2,6 +2,7 @@ import numpy as np
 
 from constantes import g_, ρ_acero, E_acero
 
+from secciones import Circular
 
 class Barra(object):
 
@@ -43,10 +44,6 @@ class Barra(object):
         """
         
         """Implementar"""
-
-
-        return 0
-
 
 
 

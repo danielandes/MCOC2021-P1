@@ -24,7 +24,7 @@ class Circular(object):
         
         """Implementar"""	
         
-        return self.area()*ρ_acero*g
+        return self.area()*ρ_acero*g_
 
     def inercia_xx(self):
 
