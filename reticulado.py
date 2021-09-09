@@ -142,6 +142,12 @@ class Reticulado(object):
         # print (s)
 
         # print ("nodos:")
-
-
+        print("nodos:")
+        for i in range(self.Nnodos):
+            pos=(self.obtener_coordenada_nodal(i))
+            print(i,":","(",pos[0],pos[1],pos[2],")")
+        print("barras:")
+        for i in range(len(self.barras)):
+            nodo=self.barras[i].obtener_conectividad()
+            print(i,":","[",nodo[0],nodo[1],"]")
         return s
