@@ -42,7 +42,10 @@ class Barra(object):
         xi : Arreglo numpy de dimenson (3,) con coordenadas del nodo i
         xj : Arreglo numpy de dimenson (3,) con coordenadas del nodo j
         """
-        
+        Peso_lonja= self.seccion.beso()
+        largo= self.calcular_largo(reticulado)
+        peso_barra =largo*Peso_lonja
+        return(peso_barra)
         """Implementar"""
 
 
