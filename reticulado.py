@@ -9,9 +9,9 @@ class Reticulado(object):
     def __init__(self):
         super(Reticulado, self).__init__()
         
-        # print ("Constructor de Reticulado")
+        print("Constructor de Reticulado")
         
-        self.xyz = np.zeros((Reticulado.__NNodosInit__,3), dtype = np.double)
+        self.xyz = np.zeros((Reticulado.__NNodosInit__,3), dtype=np.double)
         self.Nnodos = 0
         self.barras = []
         self.cargas = {}
@@ -23,36 +23,33 @@ class Reticulado(object):
     def agregar_nodo(self, x, y, z=0):
         
         """Implementar"""	
-         
-        #print(f"Quiero agregar un nodo en ({x} {y} {z})")
-        numero_de_nodo_actual = self.Nnodos
-        self.xyz[numero_de_nodo_actual,:] = [x,y,z]
-        self.Nnodos += 1
 
+        print(f"Quiero agregar un nodo en ({x} {y} {z})")
+        numero_de_nodo_actual = self.Nnodos
+
+        self.xyz[numero_de_nodo_actual,:] = [x, y, z]
+
+        self.Nnodos += 1
+        
         return 0
 
     def agregar_barra(self, barra):
         
-        """Implementar"""	
+        self.barras.append(barra)        
         
-        self.barras.append(barra)
-
         return 0
 
     def obtener_coordenada_nodal(self, n):
         
         """Implementar"""	
-
-        return self.xyz[n]
+        
+        return 0
 
     def calcular_peso_total(self):
         
         """Implementar"""	
-        Peso_Total = 0
-        for i in self.barras:
-            Peso_Total += i.calcular_peso(self)
-            
-        return Peso_Total
+        
+        return 0
 
     def obtener_nodos(self):
         
@@ -127,14 +124,16 @@ class Reticulado(object):
 
 
 
+
+
+
+
     def __str__(self):
 
-        print("nodos:")
-        for i in range(self.Nnodos):
-            pos=(self.obtener_coordenada_nodal(i))
-            print(i,":","(",pos[0],pos[1],pos[2],")")
-        print("\nbarras:")
-        for i in range(len(self.barras)):
-            nodo=self.barras[i].obtener_conectividad()
-            print(i,":","[",nodo[0],nodo[1],"]")
-        return ""
+        s = "Soy un reticulado :)"
+
+        s += "\n"
+        
+        s += str(self.xyz[0 : self.Nnodos,:])
+
+        return s
