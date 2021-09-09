@@ -38,9 +38,11 @@ ret.agregar_barra(b2)
 ret.agregar_barra(b3)
 
 print(ret)
-
+ret.__str__()
 peso_total = ret.calcular_peso_total()
 
 print(f"peso_total = {peso_total}")
 
 ver_reticulado_2d(ret)
+#for i in range(ret.Nnodos):
+#    print(i,":","(",ret.xyz[i][0],ret.xyz[i][1],ret.xyz[i][2],")")
