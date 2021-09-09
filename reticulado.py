@@ -140,7 +140,7 @@ class Reticulado(object):
         
         for i in range(self.Nnodos):
             pos=(self.obtener_coordenada_nodal(i))
-            agregar=(str(i)+" : "+"( "+str(pos[0])+" "+str(pos[1])+" "+str(pos[2])+")")
+            agregar=(str(i)+" : "+"( "+str(pos[0])+", "+str(pos[1])+", "+str(pos[2])+")")
             s+=str(agregar)+"\n"
             
         s+="\n"+"barras:"+"\n"    
