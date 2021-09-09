@@ -22,7 +22,6 @@ class Reticulado(object):
 
     def agregar_nodo(self, x, y, z=0):
         
-        """Implementar"""	
 
         print(f"Quiero agregar un nodo en ({x} {y} {z})")
         numero_de_nodo_actual = self.Nnodos
@@ -41,15 +40,16 @@ class Reticulado(object):
 
     def obtener_coordenada_nodal(self, n):
         
-        """Implementar"""	
         
-        return 0
+        return self.xyz[n]
 
     def calcular_peso_total(self):
         
-        """Implementar"""	
-        
-        return 0
+        Peso_Total = 0
+        for i in self.barras:
+            Peso_Total += i.calcular_peso(self)
+            
+        return Peso_Total
 
     def obtener_nodos(self):
         
@@ -134,6 +134,19 @@ class Reticulado(object):
 
         s += "\n"
         
-        s += str(self.xyz[0 : self.Nnodos,:])
+        s += str(self.xyz[0 : self.Nnodos,:])+"\n"*2
 
+        s+="nodos:"+"\n"
+        
+        for i in range(self.Nnodos):
+            pos=(self.obtener_coordenada_nodal(i))
+            agregar=(str(i)+" : "+"( "+str(pos[0])+", "+str(pos[1])+", "+str(pos[2])+")")
+            s+=str(agregar)+"\n"
+            
+        s+="\n"+"barras:"+"\n"    
+  
+        for i in range(len(self.barras)):
+            nodo=self.barras[i].obtener_conectividad()
+            agregar=(str(i)+" : "+"[ "+str(nodo[0])+" "+str(nodo[1])+" ]")
+            s+=str(agregar)+"\n"
         return s
