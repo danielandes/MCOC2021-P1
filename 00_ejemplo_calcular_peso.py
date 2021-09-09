@@ -6,7 +6,6 @@ from secciones import Circular
 
 
 
-
 #Inicializar modelo
 ret = Reticulado()
 
@@ -14,10 +13,6 @@ ret = Reticulado()
 ret.agregar_nodo(0,0)
 ret.agregar_nodo(1,0)
 ret.agregar_nodo(1,1)
-
-# print (ret)
-
-#exit(0)
 
 
 #Seccion
@@ -28,9 +23,9 @@ b1 = Barra(0, 1, circular_200_40)
 b2 = Barra(1, 2, circular_200_40)
 b3 = Barra(0, 2, circular_200_40)
 
-print (b1.calcular_peso(ret))
-print (b2.calcular_peso(ret))
-print (b3.calcular_peso(ret))
+#print (b1.calcular_peso(ret))
+#print (b2.calcular_peso(ret))
+#print (b3.calcular_peso(ret))
 
 
 ret.agregar_barra(b1)
@@ -38,11 +33,9 @@ ret.agregar_barra(b2)
 ret.agregar_barra(b3)
 
 print(ret)
-ret.__str__()
+
 peso_total = ret.calcular_peso_total()
 
 print(f"peso_total = {peso_total}")
 
 ver_reticulado_2d(ret)
-#for i in range(ret.Nnodos):
-#    print(i,":","(",ret.xyz[i][0],ret.xyz[i][1],ret.xyz[i][2],")")

@@ -9,7 +9,7 @@ class Reticulado(object):
     def __init__(self):
         super(Reticulado, self).__init__()
         
-        print ("Constructor de Reticulado")
+        # print ("Constructor de Reticulado")
         
         self.xyz = np.zeros((Reticulado.__NNodosInit__,3), dtype = np.double)
         self.Nnodos = 0
@@ -127,27 +127,14 @@ class Reticulado(object):
 
 
 
-
-
-
-
     def __str__(self):
 
-        s = "Soy un reticulado :)"
-
-        s += "\n"
-
-        s += str(self.xyz[0 : self.Nnodos,:])
-
-        # print (s)
-
-        # print ("nodos:")
         print("nodos:")
         for i in range(self.Nnodos):
             pos=(self.obtener_coordenada_nodal(i))
             print(i,":","(",pos[0],pos[1],pos[2],")")
-        print("barras:")
+        print("\nbarras:")
         for i in range(len(self.barras)):
             nodo=self.barras[i].obtener_conectividad()
             print(i,":","[",nodo[0],nodo[1],"]")
-        return s
+        return ""
