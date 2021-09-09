@@ -9,7 +9,7 @@ class Reticulado(object):
     def __init__(self):
         super(Reticulado, self).__init__()
         
-        print("Constructor de Reticulado")
+        # print("Constructor de Reticulado")
         
         self.xyz = np.zeros((Reticulado.__NNodosInit__,3), dtype=np.double)
         self.Nnodos = 0
@@ -23,7 +23,7 @@ class Reticulado(object):
     def agregar_nodo(self, x, y, z=0):
         
 
-        print(f"Quiero agregar un nodo en ({x} {y} {z})")
+        # print(f"Quiero agregar un nodo en ({x} {y} {z})")
         numero_de_nodo_actual = self.Nnodos
 
         self.xyz[numero_de_nodo_actual,:] = [x, y, z]
@@ -39,7 +39,6 @@ class Reticulado(object):
         return 0
 
     def obtener_coordenada_nodal(self, n):
-        
         
         return self.xyz[n]
 
@@ -130,23 +129,24 @@ class Reticulado(object):
 
     def __str__(self):
 
-        s = "Soy un reticulado :)"
+        #s = "Soy un reticulado :)"
 
-        s += "\n"
+        #s += "\n"
         
-        s += str(self.xyz[0 : self.Nnodos,:])+"\n"*2
+        #s += str(self.xyz[0 : self.Nnodos,:])+"\n"*2
 
-        s+="nodos:"+"\n"
+        s ="nodos:"+"\n"
         
         for i in range(self.Nnodos):
             pos=(self.obtener_coordenada_nodal(i))
             agregar=(str(i)+" : "+"( "+str(pos[0])+", "+str(pos[1])+", "+str(pos[2])+")")
             s+=str(agregar)+"\n"
             
-        s+="\n"+"barras:"+"\n"    
+        s += "\n"+"barras:"+"\n"    
   
         for i in range(len(self.barras)):
             nodo=self.barras[i].obtener_conectividad()
             agregar=(str(i)+" : "+"[ "+str(nodo[0])+" "+str(nodo[1])+" ]")
             s+=str(agregar)+"\n"
+            
         return s
