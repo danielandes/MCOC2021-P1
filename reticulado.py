@@ -48,8 +48,11 @@ class Reticulado(object):
     def calcular_peso_total(self):
         
         """Implementar"""	
-
-        return 0
+        Peso_Total = 0
+        for i in self.barras:
+            Peso_Total += i.calcular_peso(self)
+            
+        return Peso_Total
 
     def obtener_nodos(self):
         
