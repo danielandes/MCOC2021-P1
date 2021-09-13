@@ -43,6 +43,7 @@ class SeccionICHA(object):
         self.color = color  #color para la seccion
         numeros=["1","2","3","4","5","6","7","8","9"]
         self.caso=""
+        self.found=True
         for i in denominacion:
             if i not in numeros:
                 self.caso+=i
@@ -56,6 +57,7 @@ class SeccionICHA(object):
                 if str(a)==self.denominacion:
                     self.loc=i
                     break
+            if self.loc==0: self.found=False
             self.df=df
         elif self.caso=="HR":
             df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="HR")
@@ -66,6 +68,7 @@ class SeccionICHA(object):
                 if str(a)==self.denominacion:
                     self.loc=i
                     break
+            if self.loc==0: self.found=False            
             self.df=df
         elif self.caso=="[]":
             df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="Cajon")
@@ -76,6 +79,7 @@ class SeccionICHA(object):
                 if str(a)==self.denominacion:
                     self.loc=i
                     break
+            if self.loc==0: self.found=False                
             self.df=df
         elif self.caso=="PH":
             df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="PH")
@@ -86,6 +90,7 @@ class SeccionICHA(object):
                 if str(a)==self.denominacion:
                     self.loc=i
                     break
+            if self.loc==0: self.found=False                
             self.df=df        
         
     def area(self):
@@ -136,8 +141,14 @@ class SeccionICHA(object):
         return float(inYY)
 
     def __str__(self):
-        print(self.area())
-        print(self.peso())
-        print(self.inercia_xx())
-        print(self.inercia_yy())
-        return f"Seccion ICHA {self.denominacion}"
+        s=""
+        if self.found==True:
+            s+=f"{self.denominacion}"+" encontrada. "+"A="+str(self.area())+" Ix="+str(self.inercia_xx())+" Iy="+str(self.inercia_yy())+  "\n"
+        elif self.found==False:
+            s+="Tipo de seccion "+f"{self.denominacion}"+ " no encontrada en base de datos"+"\n"
+        s+=f"Seccion ICHA {self.denominacion}"+"\n"
+        s+="Area : "+str(self.area())+"\n"
+        s+="peso : "+str(self.peso())+"\n"
+        s+="Ixx : "+str(self.inercia_xx())+"\n"
+        s+="Iyy : "+str(self.inercia_yy())+"\n"
+        return s
