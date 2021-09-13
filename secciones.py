@@ -43,7 +43,7 @@ class SeccionICHA(object):
         self.color = color  #color para la seccion
         numeros=["1","2","3","4","5","6","7","8","9"]
         self.caso=""
-        self.found=True
+        self.found=False
         for i in denominacion:
             if i not in numeros:
                 self.caso+=i
@@ -56,8 +56,9 @@ class SeccionICHA(object):
                 a=(str(df.iloc[i][0])+str(df.iloc[i][1])+str(df.iloc[i][2])+str(df.iloc[i][3])+str(df.iloc[i][4])+str(df.iloc[i][5]))
                 if str(a)==self.denominacion:
                     self.loc=i
+                    self.found=True
                     break
-            if self.loc==0: self.found=False
+
             self.df=df
         elif self.caso=="HR":
             df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="HR")
@@ -67,8 +68,9 @@ class SeccionICHA(object):
                 a=(str(df.iloc[i][4])+str(df.iloc[i][5])+str(df.iloc[i][6])+str(df.iloc[i][7])+str(df.iloc[i][8])+str(df.iloc[i][9]))
                 if str(a)==self.denominacion:
                     self.loc=i
+                    self.found=True
                     break
-            if self.loc==0: self.found=False            
+         
             self.df=df
         elif self.caso=="[]":
             df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="Cajon")
@@ -78,8 +80,9 @@ class SeccionICHA(object):
                 a=(str(df.iloc[i][0])+str(df.iloc[i][1])+str(df.iloc[i][2])+str(df.iloc[i][3])+str(df.iloc[i][4])+str(df.iloc[i][5]))
                 if str(a)==self.denominacion:
                     self.loc=i
+                    self.found=True
                     break
-            if self.loc==0: self.found=False                
+              
             self.df=df
         elif self.caso=="PH":
             df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="PH")
@@ -89,8 +92,9 @@ class SeccionICHA(object):
                 a=(str(df.iloc[i][0])+str(df.iloc[i][1])+str(df.iloc[i][2])+str(df.iloc[i][3])+str(df.iloc[i][4])+str(df.iloc[i][5]))
                 if str(a)==self.denominacion:
                     self.loc=i
+                    self.found=True
                     break
-            if self.loc==0: self.found=False                
+                
             self.df=df        
         
     def area(self):
@@ -101,7 +105,8 @@ class SeccionICHA(object):
         elif self.caso=="PH":
             Area=self.df.iloc[self.loc][9]   
         elif self.caso=="[]":
-            Area=self.df.iloc[self.loc][8]               
+            Area=self.df.iloc[self.loc][8]    
+        else: return("nan")
         return float(Area/10**6)
     
 
@@ -113,7 +118,8 @@ class SeccionICHA(object):
         elif self.caso=="PH":
             Peso=self.df.iloc[self.loc][5]     
         elif self.caso=="[]":
-            Peso=self.df.iloc[self.loc][5]             
+            Peso=self.df.iloc[self.loc][5]     
+        else: return("nan")
         return float(Peso)
     
 
@@ -125,7 +131,8 @@ class SeccionICHA(object):
         elif self.caso=="PH":
             inXX=self.df.iloc[self.loc][10]  
         elif self.caso=="[]":
-            inXX=self.df.iloc[self.loc][9]               
+            inXX=self.df.iloc[self.loc][9]     
+        else: return("nan")            
         return float(inXX)
 
 
@@ -137,7 +144,8 @@ class SeccionICHA(object):
         elif self.caso=="PH":
             inYY=self.df.iloc[self.loc][14]    
         elif self.caso=="[]":
-            inYY=self.df.iloc[self.loc][13]   
+            inYY=self.df.iloc[self.loc][13] 
+        else: return("nan")            
         return float(inYY)
 
     def __str__(self):
