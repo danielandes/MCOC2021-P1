@@ -13,7 +13,6 @@ class Barra(object):
         self.seccion = seccion
         self.color = color
 
-
     def obtener_conectividad(self):
         return [self.ni, self.nj]
 
@@ -45,8 +44,6 @@ class Barra(object):
 
 
     def obtener_rigidez(self, ret):
-        
-        """Implementar"""	
 
         ni = self.ni
         nj = self.nj
@@ -75,8 +72,6 @@ class Barra(object):
 
 
     def obtener_fuerza(self, ret):
-        
-        """Implementar"""	
 
         ni = self.ni
         nj = self.nj
