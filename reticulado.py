@@ -66,17 +66,24 @@ class Reticulado(object):
         """Implementar"""	
         self.restricciones[nodo].append([gdl,valor])
         
+        if no_existe_restriccion_pal_nodo:
+            self.restricciones[nodo] = []
+
+        self.restricciones[nodo].append(gdl,valor)
+
         return 0
 
     def agregar_fuerza(self, nodo, gdl, valor):
         
         """Implementar"""	
+
         self.cargas[nodo].append([gdl,valor])
-        
+    
         return 0
 
 
     def ensamblar_sistema(self, factor_peso_propio=0.):
+      
         K=np.zeros((self.Nnodos*3,self.Nnodos*3))
         f=np.zeros(self.Nnodos*3)
         """Implementar"""
@@ -110,6 +117,7 @@ class Reticulado(object):
         self.K=K
         self.F=f
         self.u=np.zeros(self.Nnodos*3)        
+
         return 0
 
 
