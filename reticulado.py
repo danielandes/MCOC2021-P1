@@ -64,19 +64,50 @@ class Reticulado(object):
         
         """Implementar"""	
         
+        if no_existe_restriccion_pal_nodo:
+            self.restricciones[nodo] = []
+
+        self.restricciones[nodo].append(gdl,valor)
+
         return 0
 
     def agregar_fuerza(self, nodo, gdl, valor):
         
         """Implementar"""	
-        
+ 
+        if no_existe_fuerza_pal_nodo:
+            self.cargas[nodo] = []
+
+        self.cargas[nodo].append(gdl,valor)
+
         return 0
 
 
     def ensamblar_sistema(self, factor_peso_propio=0.):
         
-        """Implementar"""	
+        """Implementar"""
+
+        # Ensablmar rigidez y vector de cargas
+
+        for e in self.barras: #recorrer barras
+            ni = 2500
+            nj = 2333
+
+            ke = e.obtener_rigidez()
+            fe = e.obtener_vector_de_carga()
+
+            d = [3*ni, 3*ni+1, 3*ni+2, 3*nj, 3*nj+1, 3*nj+2]
         
+            for i in range(6):
+                p = d[i]
+                for j in range(6):
+                    q = d[j]
+                    K[p,q] += k_e[i,j]
+
+                f[p] += f_e[i]
+
+        #agregar cargas puntuales
+
         return 0
 
 
