@@ -66,10 +66,10 @@ class Reticulado(object):
         """Implementar"""	
         self.restricciones[nodo].append([gdl,valor])
         
-        if no_existe_restriccion_pal_nodo:
-            self.restricciones[nodo] = []
+            #if no_existe_restriccion_pal_nodo:
+            #self.restricciones[nodo] = []
 
-        self.restricciones[nodo].append(gdl,valor)
+        self.restricciones[nodo].append([gdl,valor])
 
         return 0
 
