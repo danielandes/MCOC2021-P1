@@ -140,8 +140,6 @@ class Reticulado(object):
         Ff=self.F[gdl_libres]-(Kfc@uc)
         u[gdl_libres]=solve(Kff,Ff)
         R=Kcf@u[gdl_libres]+Kcc@u[gdl_fijos]-self.F[gdl_fijos]
-        print(u)
-        print(R)
         self.u=u
         self.Ff=Ff
         self.Kcc=Kcc
@@ -152,27 +150,25 @@ class Reticulado(object):
         self.Fc=self.F[gdl_fijos]
         self.uc=u[gdl_fijos]
         self.uf=u[gdl_libres]
-        print(self.R+self.Fc)
-        suma=0
-        for i in range(len(self.R+self.Fc)):
-            suma+=self.R+self.Fc
-        print(suma)
+                
         """Implementar"""	
-        
+    
         return 0
 
     def obtener_desplazamiento_nodal(self, n):
         
         """Implementar"""	
         
-        return 0
+        return self.u
 
 
     def obtener_fuerzas(self):
         
-        """Implementar"""	
-        
-        return 0
+        lista=[]
+        for i in self.barras:
+            agregar=i.obtener_fuerza(self)
+            lista.append(float(agregar))
+        return lista
 
 
     def obtener_factores_de_utilizacion(self, f):
