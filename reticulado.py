@@ -41,7 +41,7 @@ class Reticulado(object):
 
     def obtener_coordenada_nodal(self, n):
         
-        return self.xyz[n]
+        return (self.xyz[n][0],self.xyz[n][1],self.xyz[n][2])
 
     def calcular_peso_total(self):
         
@@ -82,8 +82,9 @@ class Reticulado(object):
             for j in range(len(factor_peso_propio)):
                 self.factor_peso_propio.append(factor_peso_propio[j])
         #print(self.factor_peso_propio)
-        K=np.zeros((self.Nnodos*3,self.Nnodos*3))
-        f=np.zeros(self.Nnodos*3)
+        K=np.zeros((self.Nnodos*3,self.Nnodos*3),dtype=np.double)
+        f=np.zeros((self.Nnodos*3),dtype=np.double)
+        #print(len(f))
         """Implementar"""
         for barra in self.barras:
             ni=barra.ni
@@ -102,7 +103,7 @@ class Reticulado(object):
             #print(i)
             #print(self.cargas)
             #print(self.restricciones)
-            Ncargas=len(self.cargas[i])
+            #Ncargas=len(self.cargas[i])
             #print(Ncargas)
             for carga in self.cargas[i]:
                 #print(carga)
@@ -118,6 +119,7 @@ class Reticulado(object):
         self.F=f
         self.u=np.zeros(self.Nnodos*3)
         #print(self.F) 
+        print(self.K)
 
         return 0
 
@@ -149,7 +151,7 @@ class Reticulado(object):
         Ff=self.F[gdl_libres]-(Kfc@uc)
         u[gdl_libres]=solve(Kff,Ff)
         R=Kcf@u[gdl_libres]+Kcc@u[gdl_fijos]-self.F[gdl_fijos]
-       # print("prueba",Kcc@u[gdl_fijos])
+        #print("prueba",Kcc@u[gdl_fijos])
         self.u=u
         self.Ff=Ff
         self.Kcc=Kcc
@@ -164,7 +166,7 @@ class Reticulado(object):
         #print(self.F)
         #print(self.K@self.u)
         #print(R)
-                
+        #print(self.Kff@self.uf)
         """Implementar"""	
         #print("halo")
         #cont=0
