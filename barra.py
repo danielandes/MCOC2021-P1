@@ -55,7 +55,7 @@ class Barra(object):
 
         cosθx = (xj[0]-xi[0])/L
         cosθy = (xj[1]-xi[1])/L
-        cosθz = (xj[2]-xi[2])/L
+        cosθz = (xj[2]-xi[2])/L 
 
         T  = np.array([-cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz])
         T_T = T.T
@@ -66,10 +66,11 @@ class Barra(object):
 
     def obtener_vector_de_cargas(self, ret):
         
-        """Implementar"""	
+        """Implementar"""
+        	
         W = self.calcular_peso(ret)
 
-        fe = (np.array([0,0,-1,0,0,-1])).T *(W/2)
+        fe = (np.array([0,0,-1,0,0,-1])).T * (W/2)
 
         return fe
 
