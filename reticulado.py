@@ -173,7 +173,7 @@ class Reticulado(object):
 
         for i in range(self.Nnodos):
             for pos in range(3):
-                print(pos)
+                #print(pos)
                 xyz[i][pos]=self.xyz[i,pos]
                 cont+=1
             #print(xyz) 
