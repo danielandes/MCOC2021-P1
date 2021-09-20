@@ -52,7 +52,6 @@ ver_reticulado_2d(ret,opciones_barras=opciones_barras)
 ret.ensamblar_sistema(factor_peso_propio=[0., 0., 0.])
 ret.resolver_sistema()
 f = ret.obtener_fuerzas()
-#print(f)
 
 #Ver todo el reticulado en texto
 print(ret)
