@@ -3,7 +3,7 @@ from scipy.linalg import solve
 
 class Reticulado(object):
     """Define un reticulado"""
-    __NNodosInit__ = 5
+    __NNodosInit__ = 100
 
     #constructor
     def __init__(self):
@@ -168,12 +168,16 @@ class Reticulado(object):
         """Implementar"""	
         #print("halo")
         #cont=0
-        #for i in range(self.Nnodos):
-            #for pos in range(3):
-           #     print(pos)
-          #      self.xyz[i][pos]+=self.u[cont]
-         #       cont+=1
-        #print(self.xyz)
+        xyz = np.zeros((self.Nnodos,3), dtype=np.double)
+        cont=0
+
+        for i in range(self.Nnodos):
+            for pos in range(3):
+                print(pos)
+                xyz[i][pos]=self.xyz[i,pos]
+                cont+=1
+            print(xyz) 
+        self.xyz=xyz
         return 0
 
     def obtener_desplazamiento_nodal(self, n):
