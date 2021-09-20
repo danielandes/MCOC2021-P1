@@ -62,8 +62,7 @@ class Barra(object):
 
     def obtener_vector_de_cargas(self, ret):
         
-
-        return -self.calcular_peso(ret)/2*np.array([0,0,1,0,0,1])
+        return (-self.calcular_peso(ret)/2)*np.array(ret.factor_peso_propio)
 
 
     def obtener_fuerza(self, ret):
@@ -81,9 +80,9 @@ class Barra(object):
         """Implementar"""	
         u_e=np.array([ret.u[3*ni],ret.u[3*ni+1],ret.u[3*ni+2],ret.u[3*nj],ret.u[3*nj+1],ret.u[3*nj+2]])
         se=(self.seccion.area()*E_acero/self.calcular_largo(ret))*np.matmul(T,u_e)
-        print(se)
+        #print(se)
         
-        return se
+        return float(se)
 
 
 

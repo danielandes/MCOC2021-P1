@@ -77,6 +77,11 @@ class Reticulado(object):
 
 
     def ensamblar_sistema(self, factor_peso_propio=0.):
+        self.factor_peso_propio=[]
+        for i in range(2):
+            for j in range(len(factor_peso_propio)):
+                self.factor_peso_propio.append(factor_peso_propio[j])
+        #print(self.factor_peso_propio)
         K=np.zeros((self.Nnodos*3,self.Nnodos*3))
         f=np.zeros(self.Nnodos*3)
         """Implementar"""
@@ -92,14 +97,15 @@ class Reticulado(object):
                     q=d[j]
                     K[p,q]+=K_e[i,j]
                 f[p]+=f_e[i]
+        #print("hola",f)
         for i in range(self.Nnodos):
             #print(i)
-            print(self.cargas)
+            #print(self.cargas)
             #print(self.restricciones)
             Ncargas=len(self.cargas[i])
             #print(Ncargas)
             for carga in self.cargas[i]:
-                print(carga)
+                #print(carga)
                 if len(carga)>0:
                     #print(carga)
                     gdl= carga[0]
@@ -107,9 +113,11 @@ class Reticulado(object):
                     print(f"agregando carga de {fi} en GDL {gdl}")
                     gdl_global=3*i + gdl
                     f[gdl_global]+=fi
+        #print("holo",f)
         self.K=K
         self.F=f
-        self.u=np.zeros(self.Nnodos*3)        
+        self.u=np.zeros(self.Nnodos*3)
+        #print(self.F)        
         return 0
 
 
@@ -124,12 +132,12 @@ class Reticulado(object):
             res_nodo=(self.restricciones[i])
             if len(res_nodo)>0:
                 for j in res_nodo:
-                    print(i*3+j[0])
+                    #print(i*3+j[0])
                     gdl_fijos.append(i*3+j[0])
                     u[i*3+j[0]]=j[1]
         gdl_libres=np.setdiff1d(gdl_,gdl_fijos)
-        print(gdl_libres)
-        print(gdl_fijos)
+        #print(gdl_libres)
+        #print(gdl_fijos)
         Kff=self.K[np.ix_(gdl_libres,gdl_libres)]
         Kcc=self.K[np.ix_(gdl_fijos,gdl_fijos)]
         Kcf=self.K[np.ix_(gdl_fijos,gdl_libres)]
@@ -140,6 +148,7 @@ class Reticulado(object):
         Ff=self.F[gdl_libres]-(Kfc@uc)
         u[gdl_libres]=solve(Kff,Ff)
         R=Kcf@u[gdl_libres]+Kcc@u[gdl_fijos]-self.F[gdl_fijos]
+       # print("prueba",Kcc@u[gdl_fijos])
         self.u=u
         self.Ff=Ff
         self.Kcc=Kcc
@@ -150,6 +159,10 @@ class Reticulado(object):
         self.Fc=self.F[gdl_fijos]
         self.uc=u[gdl_fijos]
         self.uf=u[gdl_libres]
+        #print(self.u)
+        #print(self.F)
+        #print(self.K@self.u)
+        #print(R)
                 
         """Implementar"""	
     
@@ -158,8 +171,8 @@ class Reticulado(object):
     def obtener_desplazamiento_nodal(self, n):
         
         """Implementar"""	
-        
-        return self.u
+        a,b,c=self.u[3*n],self.u[3*n+1],self.u[3*n+2]
+        return a,b,c#self.u[3*n,3*n+1,3*n+2]
 
 
     def obtener_fuerzas(self):
@@ -218,5 +231,22 @@ class Reticulado(object):
             nodo=self.barras[i].obtener_conectividad()
             agregar=(str(i)+" : "+"[ "+str(nodo[0])+" "+str(nodo[1])+" ]")
             s+=str(agregar)+"\n"
-            
+        s+="\n"+"restricciones:"+"\n"
+        c=0
+        for i in self.restricciones:
+            if len(self.restricciones[i])>0:
+                 s+=str(c)+" : "+str(self.restricciones[i])+"\n"
+            c+=1
+        c=0
+        s+="\n"+"cargas:"+"\n"
+        for i in self.cargas:
+            if len(self.cargas[i])>0:
+                 s+=str(c)+" : "+str(self.cargas[i])+"\n"
+            c+=1
+        s+="\n"+"desplazamientos:"+"\n"
+        for i in range(self.Nnodos):
+            s+=str(i)+" : "+str(self.obtener_desplazamiento_nodal(i))+"\n"
+        s+="\n"+"fuerzas:"+"\n"
+        for i in range(len(self.barras)):
+            s+=str(i)+" : "+str(self.obtener_fuerzas()[i])+"\n"
         return s
