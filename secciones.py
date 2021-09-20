@@ -96,7 +96,31 @@ class SeccionICHA(object):
                     break
                 
             self.df=df        
-        
+            
+        elif self.caso=="O":
+            df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="Circulares Mayores")
+            df=df.replace(to_replace="×", value="x")
+            self.loc=0
+            for i in range(len(df.index)):
+                a=(str("O")+str(df.iloc[i][0])+str(",")+str(df.iloc[i][1])+str(",")+str(df.iloc[i][2]))
+                if str(a)==self.denominacion:
+                    self.loc=i
+                    self.found=True
+                    break
+            #print(a,self.loc)    
+            self.df=df   
+        elif self.caso=="o":
+            df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="Circulares Menores")
+            df=df.replace(to_replace="×", value="x")
+            self.loc=0
+            for i in range(len(df.index)):
+                a=(str("o")+str(df.iloc[i][1])+str(",")+str(df.iloc[i][2])+str(",")+str(df.iloc[i][3]))
+                if str(a)==self.denominacion:
+                    self.loc=i
+                    self.found=True
+                    break
+            #print(a,self.loc)    
+            self.df=df            
     def area(self):
         if self.caso=="H":
             Area=self.df.iloc[self.loc][9]
@@ -105,7 +129,12 @@ class SeccionICHA(object):
         elif self.caso=="PH":
             Area=self.df.iloc[self.loc][9]   
         elif self.caso=="[]":
-            Area=self.df.iloc[self.loc][8]    
+            Area=self.df.iloc[self.loc][8] 
+        elif self.caso=="O":
+            Area=self.df.iloc[self.loc][4]
+            #print(Area)
+        elif self.caso=="o":
+            Area=self.df.iloc[self.loc][5]             
         else: return("nan")
         return float(Area/10**6)
     
@@ -118,7 +147,11 @@ class SeccionICHA(object):
         elif self.caso=="PH":
             Peso=self.df.iloc[self.loc][5]     
         elif self.caso=="[]":
-            Peso=self.df.iloc[self.loc][5]     
+            Peso=self.df.iloc[self.loc][5]  
+        elif self.caso=="O":
+            Peso=self.df.iloc[self.loc][3]
+        elif self.caso=="o":
+            Peso=self.df.iloc[self.loc][4]               
         else: return("nan")
         return float(Peso)
     
@@ -131,7 +164,11 @@ class SeccionICHA(object):
         elif self.caso=="PH":
             inXX=self.df.iloc[self.loc][10]  
         elif self.caso=="[]":
-            inXX=self.df.iloc[self.loc][9]     
+            inXX=self.df.iloc[self.loc][9] 
+        elif self.caso=="O":
+            inXX=self.df.iloc[self.loc][5] 
+        elif self.caso=="o":
+            inXX=self.df.iloc[self.loc][6]              
         else: return("nan")            
         return float(inXX)
 
@@ -145,6 +182,10 @@ class SeccionICHA(object):
             inYY=self.df.iloc[self.loc][14]    
         elif self.caso=="[]":
             inYY=self.df.iloc[self.loc][13] 
+        elif self.caso=="O":
+            inYY=self.df.iloc[self.loc][5] 
+        elif self.caso=="o":
+            inYY=self.df.iloc[self.loc][6]              
         else: return("nan")            
         return float(inYY)
 
