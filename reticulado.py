@@ -176,7 +176,7 @@ class Reticulado(object):
                 print(pos)
                 xyz[i][pos]=self.xyz[i,pos]
                 cont+=1
-            print(xyz) 
+            #print(xyz) 
         self.xyz=xyz
         return 0
 
