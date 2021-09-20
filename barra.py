@@ -58,8 +58,9 @@ class Barra(object):
         cosθz = (xj[2]-xi[2])/L
 
         T  = np.array([-cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz])
+        T_T = T.T
 
-        ke = self.seccion.area()*(E_acero/L) * (T.T @ T)
+        ke = self.seccion.area()*(E_acero/L) * (np.matmul(T_T,T))
 
         return ke
 
@@ -68,7 +69,9 @@ class Barra(object):
         """Implementar"""	
         W = self.calcular_peso(ret)
 
-        return (-W/2) * np.array([0,0,1,0,0,1])
+        fe = (np.array([0,0,-1,0,0,-1])).T *(W/2)
+
+        return fe
 
 
     def obtener_fuerza(self, ret):
@@ -89,7 +92,7 @@ class Barra(object):
 
         u_e = array([ret.u[3*ni],ret.u[3*ni+1],ret.u[3*ni+2],ret.u[3*nj],ret.u[3*nj+1],ret.u[3*nj+2]])
 
-        se = self.seccion.area()*(E_acero/L) * T * u_e
+        se = self.seccion.area()*(E_acero/L) * np.matmul(T,u_e)
 
         return se
 
