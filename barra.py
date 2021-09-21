@@ -1,5 +1,4 @@
 import numpy as np
-
 from constantes import g_, ρ_acero, E_acero
 
 
@@ -44,7 +43,6 @@ class Barra(object):
 
 
     def obtener_rigidez(self, ret):
-
         ni = self.ni
         nj = self.nj
 
@@ -57,10 +55,9 @@ class Barra(object):
         cosθy = (xj[1]-xi[1])/L
         cosθz = (xj[2]-xi[2])/L 
 
-        T  = np.array([-cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz])
-        T_T = T.T
-
-        ke = self.seccion.area()*(E_acero/L) * (np.matmul(T_T,T))
+        TT=np.array([[-cosθx], [-cosθy], [-cosθz], [cosθx], [cosθy], [cosθz]])
+        T  = np.array([[-cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz]])
+        ke = (self.seccion.area()*(E_acero/L)) * (np.matmul(TT,T))
 
         return ke
 
@@ -70,7 +67,7 @@ class Barra(object):
         	
         W = self.calcular_peso(ret)
 
-        fe = (np.array([0,0,-1,0,0,-1])).T * (W/2)
+        fe = (W/2) * np.array(ret.factor_peso_propio)
 
         return fe
 
@@ -89,13 +86,13 @@ class Barra(object):
         cosθy = (xj[1]-xi[1])/L
         cosθz = (xj[2]-xi[2])/L
 
-        T  = np.array([-cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz])
+        T  = np.array([[-cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz]])
 
-        u_e = array([ret.u[3*ni],ret.u[3*ni+1],ret.u[3*ni+2],ret.u[3*nj],ret.u[3*nj+1],ret.u[3*nj+2]])
+        u_e = np.array([ret.u[3*ni],ret.u[3*ni+1],ret.u[3*ni+2],ret.u[3*nj],ret.u[3*nj+1],ret.u[3*nj+2]])
 
         se = self.seccion.area()*(E_acero/L) * np.matmul(T,u_e)
 
-        return se
+        return float(se)
 
 
 

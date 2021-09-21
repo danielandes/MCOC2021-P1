@@ -41,7 +41,7 @@ class Reticulado(object):
 
     def obtener_coordenada_nodal(self, n):
         
-        return self.xyz[n]
+        return (self.xyz[n][0],self.xyz[n][1],self.xyz[n][2])
 
     def calcular_peso_total(self):
         
@@ -84,8 +84,14 @@ class Reticulado(object):
 
     def ensamblar_sistema(self, factor_peso_propio=0.):
       
-        self.K=np.zeros((self.Nnodos*3,self.Nnodos*3))
-        f=np.zeros(self.Nnodos*3)
+        self.factor_peso_propio=[]
+        for i in range(2):
+            for j in range(len(factor_peso_propio)):
+                self.factor_peso_propio.append(factor_peso_propio[j])
+        #print(self.factor_peso_propio)
+        K=np.zeros((self.Nnodos*3,self.Nnodos*3),dtype=np.double)
+        f=np.zeros((self.Nnodos*3),dtype=np.double)
+        #print(len(f))
         """Implementar"""
         for barra in self.barras:
             ni=barra.ni
@@ -97,16 +103,17 @@ class Reticulado(object):
                 p=d[i]
                 for j in range(6):
                     q=d[j]
-                    self.K[p,q] += K_e[i,j]
+                    K[p,q]+=K_e[i,j]
                 f[p]+=f_e[i]
+        #print("hola",f)
         for i in range(self.Nnodos):
             #print(i)
-            print(self.cargas)
+            #print(self.cargas)
             #print(self.restricciones)
-            Ncargas=len(self.cargas[i])
+            #Ncargas=len(self.cargas[i])
             #print(Ncargas)
             for carga in self.cargas[i]:
-                print(carga)
+                #print(carga)
                 if len(carga)>0:
                     #print(carga)
                     gdl= carga[0]
@@ -114,9 +121,12 @@ class Reticulado(object):
                     print(f"agregando carga de {fi} en GDL {gdl}")
                     gdl_global=3*i + gdl
                     f[gdl_global]+=fi
+        #print("holo",f)
         self.K=K
         self.F=f
-        self.u=np.zeros(self.Nnodos*3)        
+        self.u=np.zeros(self.Nnodos*3)
+        #print(self.F) 
+        print(self.K)
 
         return 0
 
@@ -132,12 +142,12 @@ class Reticulado(object):
             res_nodo=(self.restricciones[i])
             if len(res_nodo)>0:
                 for j in res_nodo:
-                    print(i*3+j[0])
+                    #print(i*3+j[0])
                     gdl_fijos.append(i*3+j[0])
                     u[i*3+j[0]]=j[1]
         gdl_libres=np.setdiff1d(gdl_,gdl_fijos)
-        print(gdl_libres)
-        print(gdl_fijos)
+        #print(gdl_libres)
+        #print(gdl_fijos)
         Kff=self.K[np.ix_(gdl_libres,gdl_libres)]
         Kcc=self.K[np.ix_(gdl_fijos,gdl_fijos)]
         Kcf=self.K[np.ix_(gdl_fijos,gdl_libres)]
@@ -158,17 +168,31 @@ class Reticulado(object):
         self.Fc=self.F[gdl_fijos]
         self.uc=u[gdl_fijos]
         self.uf=u[gdl_libres]
-                
-        """Implementar"""	
-    
+        #print(self.u)
+        #print(self.F)
+        #print(self.K@self.u)
+        #print(R)
+        #print(self.Kff@self.uf)
+        """Implementar"""   
+        #print("halo")
+        #cont=0
+        xyz = np.zeros((self.Nnodos,3), dtype=np.double)
+        cont=0
+
+        for i in range(self.Nnodos):
+            for pos in range(3):
+                #print(pos)
+                xyz[i][pos]=self.xyz[i,pos]
+                cont+=1
+            #print(xyz) 
+        self.xyz=xyz
         return 0
 
     def obtener_desplazamiento_nodal(self, n):
         
-        """Implementar"""	
-        
-        return self.u
-
+        """Implementar"""   
+        a,b,c=self.u[3*n],self.u[3*n+1],self.u[3*n+2]
+        return a,b,c#self.u[3*n,3*n+1,3*n+2]
 
     def obtener_fuerzas(self):
         

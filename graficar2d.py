@@ -92,8 +92,8 @@ def graficar_barras(ret, fig, opciones):
 
     if opciones["color_barras_por_dato"]:
         f = opciones["dato"]
-        fmax = f.max()
-        fmin = f.min()
+        fmax = max(f)
+        fmin = min(f)
         c_min = opciones["color_barra_min"]
         c_max = opciones["color_barra_max"]
         c_cero = opciones["color_barra_cero"]
