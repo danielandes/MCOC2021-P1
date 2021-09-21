@@ -16,7 +16,7 @@ class Reticulado(object):
         self.barras = []
         self.cargas = {}
         self.restricciones = {}
-        """Implementar"""	
+        """Implementar"""   
         
 
 
@@ -63,27 +63,20 @@ class Reticulado(object):
 
     def agregar_restriccion(self, nodo, gdl, valor=0.0):
         
-        """Implementar"""
-        if nodo not in self.restricciones:
-            self.restricciones[nodo] = []
-
+        """Implementar"""   
         self.restricciones[nodo].append([gdl,valor])
-
+        
         return 0
 
     def agregar_fuerza(self, nodo, gdl, valor):
         
-        """Implementar"""	
-        if nodo not in self.cargas:
-            self.cargas[nodo] = []
-    
+        """Implementar"""   
         self.cargas[nodo].append([gdl,valor])
         
         return 0
 
 
     def ensamblar_sistema(self, factor_peso_propio=0.):
-      
         self.factor_peso_propio=[]
         for i in range(2):
             for j in range(len(factor_peso_propio)):
@@ -125,8 +118,8 @@ class Reticulado(object):
         self.K=K
         self.F=f
         self.u=np.zeros(self.Nnodos*3)
-        #print(self.F) 
-        print(self.K)
+        print(self.F) 
+        #print(self.K)
 
         return 0
 
@@ -158,6 +151,7 @@ class Reticulado(object):
         Ff=self.F[gdl_libres]-(Kfc@uc)
         u[gdl_libres]=solve(Kff,Ff)
         R=Kcf@u[gdl_libres]+Kcc@u[gdl_fijos]-self.F[gdl_fijos]
+        #print("prueba",Kcc@u[gdl_fijos])
         self.u=u
         self.Ff=Ff
         self.Kcc=Kcc
@@ -194,24 +188,25 @@ class Reticulado(object):
         a,b,c=self.u[3*n],self.u[3*n+1],self.u[3*n+2]
         return a,b,c#self.u[3*n,3*n+1,3*n+2]
 
+
     def obtener_fuerzas(self):
         
         lista=[]
         for i in self.barras:
             agregar=i.obtener_fuerza(self)
             lista.append(float(agregar))
-        return lista
+        return np.array(lista)
 
 
     def obtener_factores_de_utilizacion(self, f):
         
-        """Implementar"""	
+        """Implementar"""   
         
         return 0
 
     def rediseñar(self, Fu, ϕ=0.9):
         
-        """Implementar"""	
+        """Implementar"""   
         
         return 0
 
@@ -219,7 +214,7 @@ class Reticulado(object):
 
     def chequear_diseño(self, Fu, ϕ=0.9):
         
-        """Implementar"""	
+        """Implementar"""   
         
         return 0
 
@@ -250,5 +245,22 @@ class Reticulado(object):
             nodo=self.barras[i].obtener_conectividad()
             agregar=(str(i)+" : "+"[ "+str(nodo[0])+" "+str(nodo[1])+" ]")
             s+=str(agregar)+"\n"
-            
+        s+="\n"+"restricciones:"+"\n"
+        c=0
+        for i in self.restricciones:
+            if len(self.restricciones[i])>0:
+                 s+=str(c)+" : "+str(self.restricciones[i])+"\n"
+            c+=1
+        c=0
+        s+="\n"+"cargas:"+"\n"
+        for i in self.cargas:
+            if len(self.cargas[i])>0:
+                 s+=str(c)+" : "+str(self.cargas[i])+"\n"
+            c+=1
+        s+="\n"+"desplazamientos:"+"\n"
+        for i in range(self.Nnodos):
+            s+=str(i)+" : "+str(self.obtener_desplazamiento_nodal(i))+"\n"
+        s+="\n"+"fuerzas:"+"\n"
+        for i in range(len(self.barras)):
+            s+=str(i)+" : "+str(self.obtener_fuerzas()[i])+"\n"
         return s
