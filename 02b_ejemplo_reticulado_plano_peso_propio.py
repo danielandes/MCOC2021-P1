@@ -40,7 +40,7 @@ for n in range(ret.Nnodos):
 	ret.agregar_restriccion(n, 2, 0.)
 
 #Cargar el nodo 4 en la direccion 1 (Y)
-# ret.agregar_fuerza(4, 1, -100*KN_)
+#ret.agregar_fuerza(4, 1, -100*KN_)
 
 #Visualizar y comprobar las secciones
 opciones_barras = {

@@ -16,7 +16,7 @@ class Reticulado(object):
         self.barras = []
         self.cargas = {}
         self.restricciones = {}
-        """Implementar"""   
+        """Implementar"""	
         
 
 
@@ -63,14 +63,14 @@ class Reticulado(object):
 
     def agregar_restriccion(self, nodo, gdl, valor=0.0):
         
-        """Implementar"""   
+        """Implementar"""	
         self.restricciones[nodo].append([gdl,valor])
         
         return 0
 
     def agregar_fuerza(self, nodo, gdl, valor):
         
-        """Implementar"""   
+        """Implementar"""	
         self.cargas[nodo].append([gdl,valor])
         
         return 0
@@ -167,7 +167,7 @@ class Reticulado(object):
         #print(self.K@self.u)
         #print(R)
         #print(self.Kff@self.uf)
-        """Implementar"""   
+        """Implementar"""	
         #print("halo")
         #cont=0
         xyz = np.zeros((self.Nnodos,3), dtype=np.double)
@@ -184,7 +184,7 @@ class Reticulado(object):
 
     def obtener_desplazamiento_nodal(self, n):
         
-        """Implementar"""   
+        """Implementar"""	
         a,b,c=self.u[3*n],self.u[3*n+1],self.u[3*n+2]
         return a,b,c#self.u[3*n,3*n+1,3*n+2]
 
@@ -200,13 +200,13 @@ class Reticulado(object):
 
     def obtener_factores_de_utilizacion(self, f):
         
-        """Implementar"""   
+        """Implementar"""	
         
         return 0
 
     def rediseñar(self, Fu, ϕ=0.9):
         
-        """Implementar"""   
+        """Implementar"""	
         
         return 0
 
@@ -214,7 +214,7 @@ class Reticulado(object):
 
     def chequear_diseño(self, Fu, ϕ=0.9):
         
-        """Implementar"""   
+        """Implementar"""	
         
         return 0
 

@@ -48,7 +48,7 @@ class Barra(object):
 
         xi = ret.xyz[ni,:]
         xj = ret.xyz[nj,:]
-    
+	
         L=self.calcular_largo(ret)
         cosX=(xj[0]-xi[0])/L
         cosY=(xj[1]-xi[1])/L
@@ -70,13 +70,13 @@ class Barra(object):
 
         xi = ret.xyz[ni,:]
         xj = ret.xyz[nj,:]
-    
+	
         L=self.calcular_largo(ret)
         cosX=(xj[0]-xi[0])/L
         cosY=(xj[1]-xi[1])/L
         cosZ=(xj[2]-xi[2])/L
         T=np.array([[-cosX, -cosY, -cosZ, cosX, cosY, cosZ],])
-        """Implementar"""   
+        """Implementar"""	
         u_e=np.array([ret.u[3*ni],ret.u[3*ni+1],ret.u[3*ni+2],ret.u[3*nj],ret.u[3*nj+1],ret.u[3*nj+2]])
         se=(self.seccion.area()*E_acero/self.calcular_largo(ret))*np.matmul(T,u_e)
         #print(se)
@@ -88,7 +88,7 @@ class Barra(object):
 
     def chequear_diseño(self, Fu, ret, ϕ=0.9):
         
-        """Implementar"""   
+        """Implementar"""	
         
         return 0
 
@@ -98,13 +98,15 @@ class Barra(object):
 
     def obtener_factor_utilizacion(self, Fu, ϕ=0.9):
         
-        """Implementar"""   
+        """Implementar"""	
         
         return 0
 
 
     def rediseñar(self, Fu, ret, ϕ=0.9):
         
-        """Implementar"""   
+        """Implementar"""	
         
         return 0
+
+

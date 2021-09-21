@@ -96,7 +96,7 @@ class SeccionICHA(object):
                     break
                 
             self.df=df        
-        
+            
         elif self.caso=="O":
             df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="Circulares Mayores")
             df=df.replace(to_replace="×", value="x")
@@ -201,5 +201,3 @@ class SeccionICHA(object):
         s+="Ixx : "+str(self.inercia_xx())+"\n"
         s+="Iyy : "+str(self.inercia_yy())+"\n"
         return s
-
-    
