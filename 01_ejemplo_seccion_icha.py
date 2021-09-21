@@ -11,3 +11,9 @@ print(sec3)
 
 sec4 = SeccionICHA("cR1118x405x517.7",base_datos="Perfiles ICHA.xlsx")
 print(sec4)
+
+sec5 = SeccionICHA("O1624,1600,12",base_datos="Perfiles ICHA.xlsx")
+print(sec5)
+
+sec6 = SeccionICHA("o12.7,10.9,0.9",base_datos="Perfiles ICHA.xlsx")
+print(sec6)
