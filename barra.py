@@ -60,7 +60,7 @@ class Barra(object):
         return ke
 
     def obtener_vector_de_cargas(self, ret):
-        
+        print(self.calcular_peso(ret))
         return (self.calcular_peso(ret)/2)*np.array(ret.factor_peso_propio)
 
 

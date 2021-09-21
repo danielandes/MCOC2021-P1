@@ -118,8 +118,8 @@ class Reticulado(object):
         self.K=K
         self.F=f
         self.u=np.zeros(self.Nnodos*3)
-        #print(self.F) 
-        print(self.K)
+        print(self.F) 
+        #print(self.K)
 
         return 0
 
@@ -195,7 +195,7 @@ class Reticulado(object):
         for i in self.barras:
             agregar=i.obtener_fuerza(self)
             lista.append(float(agregar))
-        return lista
+        return np.array(lista)
 
 
     def obtener_factores_de_utilizacion(self, f):
