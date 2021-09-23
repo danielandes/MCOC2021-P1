@@ -118,7 +118,7 @@ class Reticulado(object):
         self.K=K
         self.F=f
         self.u=np.zeros(self.Nnodos*3)
-        print(self.F) 
+        #print(self.F) 
         #print(self.K)
 
         return 0
