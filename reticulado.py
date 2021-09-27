@@ -234,9 +234,12 @@ class Reticulado(object):
 
         # creacion de los datasets
         xyz = fid.create_dataset(("xyz"), shape=(1, 3), maxshape=(None, 3), dtype=double)     
-        barras = fid.create_dataset(("barras"), shape=(10, 2), maxshape=(None, 2), dtype=int32) 
+        barras = fid.create_dataset(("barras"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
         secciones = fid.create_dataset(("secciones"), shape=(1, 1), maxshape=(None, 1), dtype=h5py.string_dtype()) 
         restricciones = fid.create_dataset(("restricciones"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
+        restricciones_val = fid.create_dataset(("restricciones_val"), shape=(1, 1), maxshape=(None, 1), dtype=double) 
+        cargas = fid.create_dataset(("cargas"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
+        cargas_val = fid.create_dataset(("cargas_val"), shape=(1, 1), maxshape=(None, 1), dtype=double) 
        
         cont_coord = 0
         for coord in self.xyz:
@@ -268,9 +271,24 @@ class Reticulado(object):
         for i in self.restricciones:
             for j in self.restricciones[i]:
                 restricciones.resize((cont_rest+1,2))  #hago crecer el dataset
+                restricciones_val.resize((cont_rest+1,1))  #hago crecer el dataset
                 restricciones[cont_rest,0] = i
                 restricciones[cont_rest,1] = j[0]
+
+                restricciones_val[cont_rest,0] = j[1]
                 cont_rest += 1 
+
+        cont_cargas = 0
+        for i in self.cargas:
+            for j in self.cargas[i]:
+                cargas.resize((cont_cargas+1,2))  #hago crecer el dataset
+                cargas_val.resize((cont_cargas+1,1))  #hago crecer el dataset
+                cargas[cont_cargas,0] = i
+                cargas[cont_cargas,1] = j[0]
+                
+                cargas_val[cont_cargas,0] = j[1]
+                cont_cargas += 1 
+        # print (self.cargas)
 
 
 
