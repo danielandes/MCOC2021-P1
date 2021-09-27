@@ -189,6 +189,9 @@ class SeccionICHA(object):
         else: return("nan")            
         return float(inYY)
 
+    def nombre(self):
+        return self.denominacion
+
     def __str__(self):
         s=""
         if self.found==True:
