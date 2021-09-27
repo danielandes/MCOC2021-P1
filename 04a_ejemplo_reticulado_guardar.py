@@ -5,6 +5,7 @@ from constantes import *
 from math import sqrt
 from secciones import SeccionICHA
 
+
 L = 2.*m_
 H = 2.*m_
 B = 1.*m_
@@ -71,7 +72,8 @@ opciones_barras = {
 	"ver_secciones_en_barras": True,
 	"color_barras_por_seccion": True,
 }
-ver_reticulado_3d(ret,opciones_barras=opciones_barras)
+
+#ver_reticulado_3d(ret,opciones_barras=opciones_barras)
 
 
 ret.guardar("04a_ejemplo_reticulado_guardar.h5")

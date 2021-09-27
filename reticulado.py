@@ -1,9 +1,12 @@
 import numpy as np
 from scipy.linalg import solve
+from matplotlib.pylab import *
+import h5py
+
 
 class Reticulado(object):
     """Define un reticulado"""
-    __NNodosInit__ = 100
+    __NNodosInit__ = 1
 
     #constructor
     def __init__(self):
@@ -25,7 +28,7 @@ class Reticulado(object):
 
         # print(f"Quiero agregar un nodo en ({x} {y} {z})")
         numero_de_nodo_actual = self.Nnodos
-
+        self.xyz.resize((numero_de_nodo_actual+1,3))
         self.xyz[numero_de_nodo_actual,:] = [x, y, z]
         self.restricciones[numero_de_nodo_actual]=[] 
         self.cargas[numero_de_nodo_actual]=[]  
@@ -35,8 +38,8 @@ class Reticulado(object):
 
     def agregar_barra(self, barra):
         
-        self.barras.append(barra)        
-        
+        self.barras.append(barra) 
+
         return 0
 
     def obtener_coordenada_nodal(self, n):
@@ -225,7 +228,49 @@ class Reticulado(object):
 
 
 
+    def guardar(self,nombre):
+        nombre = str(nombre)
+        fid = h5py.File(nombre, "w")
 
+        # creacion de los datasets
+        xyz = fid.create_dataset(("xyz"), shape=(1, 3), maxshape=(None, 3), dtype=double)     
+        barras = fid.create_dataset(("barras"), shape=(10, 2), maxshape=(None, 2), dtype=int32) 
+        secciones = fid.create_dataset(("secciones"), shape=(1, 1), maxshape=(None, 1), dtype=h5py.string_dtype()) 
+        restricciones = fid.create_dataset(("restricciones"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
+       
+        cont_coord = 0
+        for coord in self.xyz:
+            #print (barra)
+            xyz.resize((cont_coord+1,3))  #hago crecer el dataset
+            xyz[cont_coord,0] = self.xyz[cont_coord,0]
+            xyz[cont_coord,1] = self.xyz[cont_coord,1]
+            xyz[cont_coord,2] = self.xyz[cont_coord,2]
+            cont_coord += 1  
+        
+        
+        cont_barra = 0
+        for barra in self.barras:
+            #print (barra)
+            barras.resize((cont_barra+1,2))  #hago crecer el dataset
+            barras[cont_barra,0] = barra.ni
+            barras[cont_barra,1] = barra.nj
+            cont_barra += 1   
+
+
+        cont_sec = 0
+        for seccion in self.barras:
+            secciones.resize((cont_sec+1,1))  #hago crecer el dataset
+            secciones[cont_sec,0] = str(barra.seccion)
+            cont_sec += 1
+
+
+        cont_rest = 0
+        for i in self.restricciones:
+            for j in self.restricciones[i]:
+                restricciones.resize((cont_rest+1,2))  #hago crecer el dataset
+                restricciones[cont_rest,0] = i
+                restricciones[cont_rest,1] = j[0]
+                cont_rest += 1 
 
 
 
