@@ -73,7 +73,7 @@ opciones_barras = {
 	"color_barras_por_seccion": True,
 }
 
-#ver_reticulado_3d(ret,opciones_barras=opciones_barras)
+ver_reticulado_3d(ret,opciones_barras=opciones_barras)
 
 
 ret.guardar("04a_ejemplo_reticulado_guardar.h5")

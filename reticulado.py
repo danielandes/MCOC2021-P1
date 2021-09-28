@@ -290,6 +290,42 @@ class Reticulado(object):
                 cont_cargas += 1 
         # print (self.cargas)
 
+        return 0
+
+
+    def abrir(self,nombre):
+        nombre = str(nombre)
+        fid = h5py.File(nombre, "r")
+        ret = Reticulado()
+        from barra import Barra
+        from secciones import SeccionICHA
+        seccion_grande = SeccionICHA("[]350x150x37.8", color="#3A8431")#, debug=True)
+        seccion_chica = SeccionICHA("[]80x40x8", color="#A3500B")
+
+        for i in fid["xyz"]:
+            ret.agregar_nodo(i[0],i[1],i[2])
+        
+        cont_1 = 0
+        for i in fid["barras"]:
+            seccion = fid["secciones"][cont_1]
+            Barra_i = Barra(i[0],i[1],seccion_grande)
+            ret.agregar_barra(Barra_i)
+            cont_1 += 1
+
+        cont_2 = 0
+        for i in fid["cargas"]:
+            valor = double(fid["cargas_val"][cont_2])
+            ret.agregar_fuerza(int(i[0]),int(i[1]),valor)
+            cont_2 += 1
+        
+        cont_3 = 0
+        for i in fid["restricciones"]:
+            valor_r = double(fid["restricciones_val"][cont_3])
+            ret.agregar_restriccion(int(i[0]),int(i[1]),valor_r)
+            cont_3 += 1
+
+        return 0
+
 
 
     def __str__(self):
