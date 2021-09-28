@@ -263,10 +263,10 @@ class Reticulado(object):
         cont_sec = 0
         #print(self.barras[0].seccion.denominacion,self.barras[2].seccion.denominacion)
         for i in range(len(self.barras)):
-            print(i)
+            # print(i)
             secciones.resize((cont_sec+1,1))  #hago crecer el dataset
             secciones[cont_sec,0] = str(self.barras[i].seccion.denominacion)
-            print(self.barras[i].seccion.denominacion)
+            # print(self.barras[i].seccion.denominacion)
             cont_sec += 1
 
         cont_rest = 0
@@ -301,19 +301,17 @@ class Reticulado(object):
         ret = self
         from barra import Barra
         from secciones import SeccionICHA
-        #seccion_grande = SeccionICHA("[]350x150x37.8", color="#3A8431")#, debug=True)
-        #seccion_chica = SeccionICHA("[]80x40x8", color="#A3500B")
 
         for i in fid["xyz"]:
             ret.agregar_nodo(i[0],i[1],i[2])
-            print(i[0],i[1],i[2])
+            # print(i[0],i[1],i[2])
         
         cont_1 = 0
         for i in fid["barras"]:
             seccion = fid["secciones"][cont_1]
-            print(fid["secciones"][cont_1])
+            # print(fid["secciones"][cont_1])
             Barra_i = Barra(i[0],i[1],SeccionICHA(str(seccion)))
-            print(Barra(i[0],i[1],SeccionICHA(str(seccion))))
+            # print(Barra(i[0],i[1],SeccionICHA(str(seccion))))
             ret.agregar_barra(Barra_i)
             cont_1 += 1
 
