@@ -235,7 +235,7 @@ class Reticulado(object):
         # creacion de los datasets
         xyz = fid.create_dataset(("xyz"), shape=(1, 3), maxshape=(None, 3), dtype=double)     
         barras = fid.create_dataset(("barras"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
-        secciones = fid.create_dataset(("secciones"), shape=(1, 1), maxshape=(None, 1), dtype=h5py.string_dtype()) 
+        secciones = fid.create_dataset(("secciones"), shape=(1, 1), maxshape=(None, 1), dtype=h5py.special_dtype(vlen=str)) 
         restricciones = fid.create_dataset(("restricciones"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
         restricciones_val = fid.create_dataset(("restricciones_val"), shape=(1, 1), maxshape=(None, 1), dtype=double) 
         cargas = fid.create_dataset(("cargas"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
@@ -261,11 +261,13 @@ class Reticulado(object):
 
 
         cont_sec = 0
-        for seccion in self.barras:
+        #print(self.barras[0].seccion.denominacion,self.barras[2].seccion.denominacion)
+        for i in range(len(self.barras)):
+            print(i)
             secciones.resize((cont_sec+1,1))  #hago crecer el dataset
-            secciones[cont_sec,0] = str(barra.seccion)
+            secciones[cont_sec,0] = str(self.barras[i].seccion.denominacion)
+            print(self.barras[i].seccion.denominacion)
             cont_sec += 1
-
 
         cont_rest = 0
         for i in self.restricciones:
@@ -296,19 +298,22 @@ class Reticulado(object):
     def abrir(self,nombre):
         nombre = str(nombre)
         fid = h5py.File(nombre, "r")
-        ret = Reticulado()
+        ret = self
         from barra import Barra
         from secciones import SeccionICHA
-        seccion_grande = SeccionICHA("[]350x150x37.8", color="#3A8431")#, debug=True)
-        seccion_chica = SeccionICHA("[]80x40x8", color="#A3500B")
+        #seccion_grande = SeccionICHA("[]350x150x37.8", color="#3A8431")#, debug=True)
+        #seccion_chica = SeccionICHA("[]80x40x8", color="#A3500B")
 
         for i in fid["xyz"]:
             ret.agregar_nodo(i[0],i[1],i[2])
+            print(i[0],i[1],i[2])
         
         cont_1 = 0
         for i in fid["barras"]:
             seccion = fid["secciones"][cont_1]
-            Barra_i = Barra(i[0],i[1],seccion_grande)
+            print(fid["secciones"][cont_1])
+            Barra_i = Barra(i[0],i[1],SeccionICHA(str(seccion)))
+            print(Barra(i[0],i[1],SeccionICHA(str(seccion))))
             ret.agregar_barra(Barra_i)
             cont_1 += 1
 
@@ -324,7 +329,7 @@ class Reticulado(object):
             ret.agregar_restriccion(int(i[0]),int(i[1]),valor_r)
             cont_3 += 1
 
-        return 0
+        return ret
 
 
 
