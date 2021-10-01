@@ -1,5 +1,5 @@
 import numpy as np
-from constantes import g_, ρ_acero, E_acero
+from constantes import g_, ρ_acero, E_acero, σy_acero
 
 
 class Barra(object):

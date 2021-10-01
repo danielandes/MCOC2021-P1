@@ -79,7 +79,7 @@ class Reticulado(object):
         return 0
 
 
-    def ensamblar_sistema(self, factor_peso_propio=0.):
+    def ensamblar_sistema(self, factor_peso_propio=0., factor_cargas=1):
         self.factor_peso_propio=[]
         for i in range(2):
             for j in range(len(factor_peso_propio)):
@@ -113,7 +113,7 @@ class Reticulado(object):
                 if len(carga)>0:
                     #print(carga)
                     gdl= carga[0]
-                    fi= carga[1]
+                    fi= carga[1]*factor_cargas
                     print(f"agregando carga de {fi} en GDL {gdl}")
                     gdl_global=3*i + gdl
                     f[gdl_global]+=fi
@@ -152,6 +152,8 @@ class Reticulado(object):
         #print(Kcc)
         uc=u[gdl_fijos]
         Ff=self.F[gdl_libres]-(Kfc@uc)
+        for i in Kff:
+            print(i)
         u[gdl_libres]=solve(Kff,Ff)
         R=Kcf@u[gdl_libres]+Kcc@u[gdl_fijos]-self.F[gdl_fijos]
         #print("prueba",Kcc@u[gdl_fijos])
