@@ -1,6 +1,7 @@
 from numpy import pi, sqrt, nan
 from numpy.random import rand
 from constantes import g_, ρ_acero, mm_
+import pandas as pd
  
 class Circular(object):
     """define una seccion Circular"""
@@ -33,8 +34,6 @@ class Circular(object):
         
 #Mas adelante, no es para P1E1
 
-from pandas import read_excel
-
 class SeccionICHA(object):
     """Lee la tabla ICHA y genera una seccion apropiada"""
 
@@ -42,128 +41,166 @@ class SeccionICHA(object):
         super(SeccionICHA, self).__init__()
         self.denominacion = denominacion
         self.color = color  #color para la seccion
+        numeros=["1","2","3","4","5","6","7","8","9"]
+        self.caso=""
+        self.found=False
+        for i in denominacion:
+            if i not in numeros:
+                self.caso+=i
+            else: break
+        if self.caso=="H":
+            df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="H")
+            df=df.replace(to_replace="×", value="x")
+            self.loc=0
+            for i in range(len(df.index)):
+                a=(str(df.iloc[i][0])+str(df.iloc[i][1])+str(df.iloc[i][2])+str(df.iloc[i][3])+str(df.iloc[i][4])+str(df.iloc[i][5]))
+                if str(a)==self.denominacion:
+                    self.loc=i
+                    self.found=True
+                    break
 
-        if denominacion[0:2] == "HR" or denominacion[0] == "W":
-            tab = "HR"
-            tipo = "HR"
-        elif denominacion[0] == "H":
-            tab = "H"
-            tipo = "H"
-        elif denominacion[0:2] == "[]":
-            tab = "Cajon"
-            tipo = "[]"
-        elif denominacion[0] == "o":
-            tab = "Circulares Menores"
-            tipo = "o"
-        elif denominacion[0] == "O":
-            tab = "Circulares Mayores"
-            tipo = "O"
-        else:
-            print(f"Tipo de seccion {denominacion} no soportada. Intentar H, HR, [], o u O")
-            self.invalid_section()
-
-        found = False
-
-        xls = read_excel(base_datos,
-        engine="openpyxl",
-        sheet_name=tab,
-        header=3)
-
-        if debug:
-            print("======xls=======")
-            print(xls)
-            print("======xls=======")
-
-
-        if tipo == "H" or tipo == "HR":
-            Nregistros = len(xls["A"])-2
-            for i_fila in range(Nregistros):
+            self.df=df
+        elif self.caso=="HR":
+            df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="HR")
+            df=df.replace(to_replace="×", value="x")
+            self.loc=0
+            for i in range(len(df.index)):
+                a=(str(df.iloc[i][4])+str(df.iloc[i][5])+str(df.iloc[i][6])+str(df.iloc[i][7])+str(df.iloc[i][8])+str(df.iloc[i][9]))
+                if str(a)==self.denominacion:
+                    self.loc=i
+                    self.found=True
+                    break
+         
+            self.df=df
+        elif self.caso=="[]":
+            df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="Cajon")
+            df=df.replace(to_replace="×", value="x")
+            self.loc=0
+            for i in range(len(df.index)):
+                a=(str(df.iloc[i][0])+str(df.iloc[i][1])+str(df.iloc[i][2])+str(df.iloc[i][3])+str(df.iloc[i][4])+str(df.iloc[i][5]))
+                if str(a)==self.denominacion:
+                    self.loc=i
+                    self.found=True
+                    break
+              
+            self.df=df
+        elif self.caso=="PH":
+            df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="PH")
+            df=df.replace(to_replace="×", value="x")
+            self.loc=0
+            for i in range(len(df.index)):
+                a=(str(df.iloc[i][0])+str(df.iloc[i][1])+str(df.iloc[i][2])+str(df.iloc[i][3])+str(df.iloc[i][4])+str(df.iloc[i][5]))
+                if str(a)==self.denominacion:
+                    self.loc=i
+                    self.found=True
+                    break
                 
-                df = xls.loc[i_fila+2,["d","bf","peso","A","Ix/10⁶","Iy/10⁶",]]
-                if debug:
-                    print("======df=======")
-                    print(df)
-                    print("======df=======")
-
-                if df.isnull().values.any():
-                    #Saltarse valores inexistentes
-                    continue
-
-                d = df["d"]
-                bf = df["bf"]
-                w = df["peso"]
-                den = f'{tipo}{d}x{bf}x{w}'
-
-                if den == self.denominacion:
-                    found = True
-                    self.d = df["d"]
-                    self.bf = df["bf"]
-                    self.w = df["peso"]
-                    self.A = df["A"]*mm_**2
-                    self.Ixx = df["Ix/10⁶"]*1e6**mm_**4
-                    self.Iyy = df["Iy/10⁶"]*1e6**mm_**4
-                    # self.denominacion = denominacion
-                    print(f"{den} encontrada. A={self.A} Ix={self.Ixx} Iy={self.Iyy} ")
-
-        if tipo == "[]":
-            Nregistros = len(xls["A"])-2
-            for i_fila in range(Nregistros):
-                
-                df = xls.loc[i_fila+2,["D","B","peso","A","Ix/10⁶","Iy/10⁶",]]
-                if debug:
-                    print("======df=======")
-                    print(df)
-                    print("======df=======")
-
-                if df.isnull().values.any():
-                    #Saltarse valores inexistentes
-                    continue
-
-                D = df["D"]
-                B = df["B"]
-                W = df["peso"]
-                den = f'{tipo}{D}x{B}x{W}'
-
-                if den == self.denominacion:
-                    found = True
-                    self.D = df["D"]
-                    self.B = df["B"]
-                    self.w = df["peso"]
-                    self.A = df["A"]*mm_**2
-                    self.Ixx = df["Ix/10⁶"]*1e6**mm_**4
-                    self.Iyy = df["Iy/10⁶"]*1e6**mm_**4
-                    # self.denominacion = denominacion
-                    print(f"{den} encontrada. A={self.A} Ix={self.Ixx} Iy={self.Iyy} ")
-
-        if not found:
-            print(f"Tipo de seccion {denominacion} no encontrada en base de datos")
-            self.invalid_section()
-        
+            self.df=df        
+            
+        elif self.caso=="O":
+            df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="Circulares Mayores")
+            df=df.replace(to_replace="×", value="x")
+            self.loc=0
+            for i in range(len(df.index)):
+                a=(str("O")+str(df.iloc[i][0])+str(",")+str(df.iloc[i][1])+str(",")+str(df.iloc[i][2]))
+                if str(a)==self.denominacion:
+                    self.loc=i
+                    self.found=True
+                    break
+            #print(a,self.loc)    
+            self.df=df   
+        elif self.caso=="o":
+            df=pd.read_excel("Perfiles ICHA.xlsx",sheet_name="Circulares Menores")
+            df=df.replace(to_replace="×", value="x")
+            self.loc=0
+            for i in range(len(df.index)):
+                a=(str("o")+str(df.iloc[i][1])+str(",")+str(df.iloc[i][2])+str(",")+str(df.iloc[i][3]))
+                if str(a)==self.denominacion:
+                    self.loc=i
+                    self.found=True
+                    break
+            #print(a,self.loc)    
+            self.df=df            
     def area(self):
-        return self.A
+        if self.caso=="H":
+            Area=self.df.iloc[self.loc][9]
+        elif self.caso=="HR":
+            Area=self.df.iloc[self.loc][13]     
+        elif self.caso=="PH":
+            Area=self.df.iloc[self.loc][9]   
+        elif self.caso=="[]":
+            Area=self.df.iloc[self.loc][8] 
+        elif self.caso=="O":
+            Area=self.df.iloc[self.loc][4]
+            #print(Area)
+        elif self.caso=="o":
+            Area=self.df.iloc[self.loc][5]             
+        else: return("nan")
+        return float(Area/10**6)
+    
 
     def peso(self):
-        return self.w
+        if self.caso=="H":
+            Peso=self.df.iloc[self.loc][5]    
+        elif self.caso=="HR":
+            Peso=self.df.iloc[self.loc][9]   
+        elif self.caso=="PH":
+            Peso=self.df.iloc[self.loc][5]     
+        elif self.caso=="[]":
+            Peso=self.df.iloc[self.loc][5]  
+        elif self.caso=="O":
+            Peso=self.df.iloc[self.loc][3]
+        elif self.caso=="o":
+            Peso=self.df.iloc[self.loc][4]               
+        else: return("nan")
+        return float(Peso)
+    
 
     def inercia_xx(self):
-        return self.Ixx
+        if self.caso=="H":
+            inXX=self.df.iloc[self.loc][10]    
+        elif self.caso=="HR":
+            inXX=self.df.iloc[self.loc][14]    
+        elif self.caso=="PH":
+            inXX=self.df.iloc[self.loc][10]  
+        elif self.caso=="[]":
+            inXX=self.df.iloc[self.loc][9] 
+        elif self.caso=="O":
+            inXX=self.df.iloc[self.loc][5] 
+        elif self.caso=="o":
+            inXX=self.df.iloc[self.loc][6]              
+        else: return("nan")            
+        return float(inXX)
+
 
     def inercia_yy(self):
-        return self.Iyy
-
-    def invalid_section(self):
-        self.A = nan
-        self.peso = nan
-        self.Ixx = nan
-        self.Iyy = nan
+        if self.caso=="H":
+            inYY=self.df.iloc[self.loc][14]      
+        elif self.caso=="HR":
+            inYY=self.df.iloc[self.loc][18]        
+        elif self.caso=="PH":
+            inYY=self.df.iloc[self.loc][14]    
+        elif self.caso=="[]":
+            inYY=self.df.iloc[self.loc][13] 
+        elif self.caso=="O":
+            inYY=self.df.iloc[self.loc][5] 
+        elif self.caso=="o":
+            inYY=self.df.iloc[self.loc][6]              
+        else: return("nan")            
+        return float(inYY)
 
     def nombre(self):
         return self.denominacion
 
     def __str__(self):
-        s = f"Seccion ICHA {self.denominacion}\n"
-        s += f"  Area : {self.A}\n"
-        s += f"  peso : {self.peso}\n"
-        s += f"  Ixx  : {self.Ixx}\n"
-        s += f"  Iyy  : {self.Iyy}\n"
+        s=""
+        if self.found==True:
+            s+=f"{self.denominacion}"+" encontrada. "+"A="+str(self.area())+" Ix="+str(self.inercia_xx())+" Iy="+str(self.inercia_yy())+  "\n"
+        elif self.found==False:
+            s+="Tipo de seccion "+f"{self.denominacion}"+ " no encontrada en base de datos"+"\n"
+        s+=f"Seccion ICHA {self.denominacion}"+"\n"
+        s+="Area : "+str(self.area())+"\n"
+        s+="peso : "+str(self.peso())+"\n"
+        s+="Ixx : "+str(self.inercia_xx())+"\n"
+        s+="Iyy : "+str(self.inercia_yy())+"\n"
         return s

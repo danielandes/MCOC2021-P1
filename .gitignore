@@ -1,5 +1,4 @@
-*.xls
-*.xlsx
-*.pdf
 *.pyc
-*.h5
+*.xlsx
+*.xls
+*.pdf
