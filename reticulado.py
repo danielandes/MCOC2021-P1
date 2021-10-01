@@ -192,11 +192,9 @@ class Reticulado(object):
 
 
 
-<<<<<<< Updated upstream
+
     def chequear_diseño(self, Fu, ϕ=0.9, silence=False):
-=======
-    def chequear_diseño(self, Fu, ϕ=0.9):
->>>>>>> Stashed changes
+
         cumple = True
         for i,b in enumerate(self.barras):
             if not b.chequear_diseño(Fu[i], self, ϕ, silence=silence):
@@ -306,13 +304,7 @@ class Reticulado(object):
                 nr += 1
 
 
-<<<<<<< Updated upstream
-=======
-        # fid["barras"] = self.xyz
 
-        # fid["secciones"] = np.array(secciones)
-
->>>>>>> Stashed changes
     def abrir(self, nombre):
         import h5py
         from secciones import SeccionICHA
