@@ -220,9 +220,14 @@ class Reticulado(object):
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     def chequear_diseño(self, Fu, ϕ=0.9, silence=False):
 
+=======
+    def chequear_diseño(self, Fu, ϕ=0.9):
+        
+>>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
 =======
     def chequear_diseño(self, Fu, ϕ=0.9):
         
@@ -259,6 +264,7 @@ class Reticulado(object):
             cont_coord += 1  
         
         
+<<<<<<< HEAD
 <<<<<<< HEAD
         s += "cargas:\n"
         for nodo in self.cargas:
@@ -340,6 +346,8 @@ class Reticulado(object):
         from barra import Barra
 
 =======
+=======
+>>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
         cont_barra = 0
         for barra in self.barras:
             #print (barra)
@@ -386,6 +394,9 @@ class Reticulado(object):
 
     def abrir(self,nombre):
         nombre = str(nombre)
+<<<<<<< HEAD
+>>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
+=======
 >>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
         fid = h5py.File(nombre, "r")
         ret = self

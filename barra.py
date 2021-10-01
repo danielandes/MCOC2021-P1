@@ -82,18 +82,18 @@ class Barra(object):
         #print(se)
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         A = self.seccion.area()
         L = self.calcular_largo(ret)
 <<<<<<< Updated upstream
 =======
+=======
+        return float(se)
+>>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
 
-        xi = ret.obtener_coordenada_nodal(self.ni)
-        xj = ret.obtener_coordenada_nodal(self.nj)
 
-        cosθx = (xj[0] - xi[0])/L
-        cosθy = (xj[1] - xi[1])/L
-        cosθz = (xj[2] - xi[2])/L
 
+<<<<<<< HEAD
         Tθ = np.array([ -cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz ]).reshape((6,1))
 
         return E_acero * A / L * (Tθ.T @ ue)
@@ -116,6 +116,11 @@ class Barra(object):
 
 >>>>>>> Stashed changes
 =======
+    def chequear_diseño(self, Fu, ret, ϕ=0.9):
+        
+>>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
+=======
+
     def chequear_diseño(self, Fu, ret, ϕ=0.9):
         
 >>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
