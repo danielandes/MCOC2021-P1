@@ -559,5 +559,7 @@ ver_reticulado_3d(ret,
 
 ret.guardar("Grupo_06.h5")
 
+print (ret)
+
 print (f"Peso Total: {ret.calcular_peso_total()} kg")
 print (f"Peso Total: {ret.calcular_peso_total()/1000} ton")

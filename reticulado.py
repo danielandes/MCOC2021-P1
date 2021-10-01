@@ -229,218 +229,218 @@ class Reticulado(object):
 
 
 
-    # def guardar(self,nombre):
-    #     nombre = str(nombre)
-    #     fid = h5py.File(nombre, "w")
-
-    #     # creacion de los datasets
-    #     xyz = fid.create_dataset(("xyz"), shape=(1, 3), maxshape=(None, 3), dtype=float64)     
-    #     barras = fid.create_dataset(("barras"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
-    #     secciones = fid.create_dataset(("secciones"), shape=(1, 1), maxshape=(None, 1), dtype=h5py.string_dtype()) 
-    #     restricciones = fid.create_dataset(("restricciones"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
-    #     restricciones_val = fid.create_dataset(("restricciones_val"), shape=(1, 1), maxshape=(None, 1), dtype=float64) 
-    #     cargas = fid.create_dataset(("cargas"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
-    #     cargas_val = fid.create_dataset(("cargas_val"), shape=(1, 1), maxshape=(None, 1), dtype=float64) 
-       
-    #     cont_coord = 0
-    #     for coord in self.xyz:
-    #         #print (barra)
-    #         xyz.resize((cont_coord+1,3))  #hago crecer el dataset
-    #         xyz[cont_coord,0] = self.xyz[cont_coord,0]
-    #         xyz[cont_coord,1] = self.xyz[cont_coord,1]
-    #         xyz[cont_coord,2] = self.xyz[cont_coord,2]
-    #         cont_coord += 1  
-        
-        
-    #     cont_barra = 0
-    #     for barra in self.barras:
-    #         #print (barra)
-    #         barras.resize((cont_barra+1,2))  #hago crecer el dataset
-    #         barras[cont_barra,0] = barra.ni
-    #         barras[cont_barra,1] = barra.nj
-    #         cont_barra += 1   
-
-
-    #     cont_sec = 0
-    #     #print(self.barras[0].seccion.denominacion,self.barras[2].seccion.denominacion)
-    #     for i in range(len(self.barras)):
-    #         # print(i)
-    #         secciones.resize((cont_sec+1,1))  #hago crecer el dataset
-    #         secciones[cont_sec,0] = str(self.barras[i].seccion.denominacion)
-    #         # print(self.barras[i].seccion.denominacion)
-    #         cont_sec += 1
-
-    #     cont_rest = 0
-    #     for i in self.restricciones:
-    #         for j in self.restricciones[i]:
-    #             restricciones.resize((cont_rest+1,2))  #hago crecer el dataset
-    #             restricciones_val.resize((cont_rest+1,1))  #hago crecer el dataset
-    #             restricciones[cont_rest,0] = i
-    #             restricciones[cont_rest,1] = j[0]
-
-    #             restricciones_val[cont_rest,0] = j[1]
-    #             cont_rest += 1 
-
-    #     cont_cargas = 0
-    #     for i in self.cargas:
-    #         for j in self.cargas[i]:
-    #             cargas.resize((cont_cargas+1,2))  #hago crecer el dataset
-    #             cargas_val.resize((cont_cargas+1,1))  #hago crecer el dataset
-    #             cargas[cont_cargas,0] = i
-    #             cargas[cont_cargas,1] = j[0]
-                
-    #             cargas_val[cont_cargas,0] = j[1]
-    #             cont_cargas += 1 
-    #     # print (self.cargas)
-
-    #     return 0
-
-
-    # def abrir(self,nombre):
-    #     nombre = str(nombre)
-    #     fid = h5py.File(nombre, "r")
-    #     ret = self
-    #     from barra import Barra
-    #     from secciones import SeccionICHA
-
-    #     for i in fid["xyz"]:
-    #         ret.agregar_nodo(i[0],i[1],i[2])
-    #         # print(i[0],i[1],i[2])
-        
-
-    #     dict_secciones = {}
-
-    #     cont_1 = 0
-    #     for i in fid["barras"]:
-    #         seccion = str(fid["secciones"][cont_1])
-    #         seccion = seccion[1:]
-    #         seccion = seccion[1:]
-    #         seccion = seccion[:-1]            
-    #         seccion = seccion[1:]
-    #         seccion = seccion[:-1]
-
-    #         if not seccion in dict_secciones:
-    #             dict_secciones[seccion] = SeccionICHA(str(seccion))
-
-            
-
-    #         print (seccion)
-
-    #         # print(fid["secciones"][cont_1])
-    #         Barra_i = Barra(i[0],i[1],dict_secciones[seccion])
-    #         # print(Barra(i[0],i[1],SeccionICHA(str(seccion))))
-    #         ret.agregar_barra(Barra_i)
-    #         cont_1 += 1
-
-    #     cont_2 = 0
-    #     for i in fid["cargas"]:
-    #         valor = double(fid["cargas_val"][cont_2])
-    #         ret.agregar_fuerza(int(i[0]),int(i[1]),valor)
-    #         cont_2 += 1
-        
-    #     cont_3 = 0
-    #     for i in fid["restricciones"]:
-    #         valor_r = double(fid["restricciones_val"][cont_3])
-    #         ret.agregar_restriccion(int(i[0]),int(i[1]),valor_r)
-    #         cont_3 += 1
-
-    #     return ret
-
-    def guardar(self, nombre):
-        import h5py
-
+    def guardar(self,nombre):
+        nombre = str(nombre)
         fid = h5py.File(nombre, "w")
 
-        fid["xyz"] = self.xyz
-
-        Nbarras = len(self.barras)
-        barras = np.zeros((Nbarras,2), dtype=np.int32)
-        secciones = fid.create_dataset("secciones", shape=(Nbarras,1), dtype=h5py.string_dtype())
-
-        for i, b in enumerate(self.barras):
-            barras[i,0] = b.ni
-            barras[i,1] = b.nj
-            secciones[i] = b.seccion.nombre()
-
-        fid["barras"] = barras
-
-        data_rest = fid.create_dataset("restricciones", (1,2), maxshape=(None,2), dtype=np.int32)
-        data_rest_val = fid.create_dataset("restricciones_val", (1,), maxshape=(None,), dtype=np.double)
-        nr = 0
-        for nodo in  self.restricciones:
-            for gdl, val in self.restricciones[nodo]:
-                data_rest.resize((nr+1,2))
-                data_rest_val.resize((nr+1,))
-                data_rest[nr, 0] = nodo
-                data_rest[nr, 1] = gdl
-                data_rest_val[nr] = val
-                nr += 1
-
-
-        data_cargas = fid.create_dataset("cargas", (1,2), maxshape=(None,2), dtype=np.int32)
-        data_cargas_val = fid.create_dataset("cargas_val", (1,), maxshape=(None,), dtype=np.double)
-        nr = 0
-        for nodo in  self.cargas:
-            for gdl, val in self.cargas[nodo]:
-                data_cargas.resize((nr+1,2))
-                data_cargas_val.resize((nr+1,))
-                data_cargas[nr, 0] = nodo
-                data_cargas[nr, 1] = gdl
-                data_cargas_val[nr] = val
-                nr += 1
+        # creacion de los datasets
+        xyz = fid.create_dataset(("xyz"), shape=(1, 3), maxshape=(None, 3), dtype=float64)     
+        barras = fid.create_dataset(("barras"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
+        secciones = fid.create_dataset(("secciones"), shape=(1, 1), maxshape=(None, 1), dtype=h5py.string_dtype()) 
+        restricciones = fid.create_dataset(("restricciones"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
+        restricciones_val = fid.create_dataset(("restricciones_val"), shape=(1, 1), maxshape=(None, 1), dtype=float64) 
+        cargas = fid.create_dataset(("cargas"), shape=(1, 2), maxshape=(None, 2), dtype=int32) 
+        cargas_val = fid.create_dataset(("cargas_val"), shape=(1, 1), maxshape=(None, 1), dtype=float64) 
+       
+        cont_coord = 0
+        for coord in self.xyz:
+            #print (barra)
+            xyz.resize((cont_coord+1,3))  #hago crecer el dataset
+            xyz[cont_coord,0] = self.xyz[cont_coord,0]
+            xyz[cont_coord,1] = self.xyz[cont_coord,1]
+            xyz[cont_coord,2] = self.xyz[cont_coord,2]
+            cont_coord += 1  
+        
+        
+        cont_barra = 0
+        for barra in self.barras:
+            #print (barra)
+            barras.resize((cont_barra+1,2))  #hago crecer el dataset
+            barras[cont_barra,0] = barra.ni
+            barras[cont_barra,1] = barra.nj
+            cont_barra += 1   
 
 
-    def abrir(self, nombre):
+        cont_sec = 0
+        #print(self.barras[0].seccion.denominacion,self.barras[2].seccion.denominacion)
+        for i in range(len(self.barras)):
+            # print(i)
+            secciones.resize((cont_sec+1,1))  #hago crecer el dataset
+            secciones[cont_sec,0] = str(self.barras[i].seccion.denominacion)
+            # print(self.barras[i].seccion.denominacion)
+            cont_sec += 1
 
-        import h5py
-        from secciones import SeccionICHA
-        from barra import Barra
+        cont_rest = 0
+        for i in self.restricciones:
+            for j in self.restricciones[i]:
+                restricciones.resize((cont_rest+1,2))  #hago crecer el dataset
+                restricciones_val.resize((cont_rest+1,1))  #hago crecer el dataset
+                restricciones[cont_rest,0] = i
+                restricciones[cont_rest,1] = j[0]
 
+                restricciones_val[cont_rest,0] = j[1]
+                cont_rest += 1 
+
+        cont_cargas = 0
+        for i in self.cargas:
+            for j in self.cargas[i]:
+                cargas.resize((cont_cargas+1,2))  #hago crecer el dataset
+                cargas_val.resize((cont_cargas+1,1))  #hago crecer el dataset
+                cargas[cont_cargas,0] = i
+                cargas[cont_cargas,1] = j[0]
+                
+                cargas_val[cont_cargas,0] = j[1]
+                cont_cargas += 1 
+        # print (self.cargas)
+
+        return 0
+
+
+    def abrir(self,nombre):
+        nombre = str(nombre)
         fid = h5py.File(nombre, "r")
+        ret = self
+        from barra import Barra
+        from secciones import SeccionICHA
 
-        xyz = fid["xyz"][:,:]
-
-        Nnodos = xyz.shape[0]
-
-        for i in range(Nnodos):
-            self.agregar_nodo(xyz[i,0], xyz[i,1], xyz[i,2])
-
-        barras = fid["barras"]
-        secciones = fid["secciones"]
-        cargas = fid["cargas"]
-        cargas_val = fid["cargas_val"]
-        restricciones = fid["restricciones"]
-        restricciones_val = fid["restricciones_val"]
-
-        Nbarras = fid["barras"].shape[0]
+        for i in fid["xyz"]:
+            ret.agregar_nodo(i[0],i[1],i[2])
+            # print(i[0],i[1],i[2])
+        
 
         dict_secciones = {}
 
-        for i in range(Nbarras):
-            ni = barras[i,0]
-            nj = barras[i,1]
+        cont_1 = 0
+        for i in fid["barras"]:
+            seccion = str(fid["secciones"][cont_1])
+            seccion = seccion[1:]
+            seccion = seccion[1:]
+            seccion = seccion[:-1]            
+            seccion = seccion[1:]
+            seccion = seccion[:-1]
 
-            den = secciones[i][0]
+            if not seccion in dict_secciones:
+                dict_secciones[seccion] = SeccionICHA(str(seccion))
 
-            if not den in dict_secciones:
-                dict_secciones[den] = SeccionICHA(den)
-
-            self.agregar_barra(Barra(ni,nj,dict_secciones[den]))
             
 
-        for i in range(restricciones.shape[0]):
-            nodo = restricciones[i,0]
-            gdl = restricciones[i,1]
-            val = restricciones_val[i]
+            #print (seccion)
 
-            self.agregar_restriccion(nodo, gdl, val)
+            # print(fid["secciones"][cont_1])
+            Barra_i = Barra(i[0],i[1],dict_secciones[seccion])
+            # print(Barra(i[0],i[1],SeccionICHA(str(seccion))))
+            ret.agregar_barra(Barra_i)
+            cont_1 += 1
 
-        for i in range(cargas.shape[0]):
-            nodo = cargas[i,0]
-            gdl = cargas[i,1]
-            val = cargas_val[i]
+        cont_2 = 0
+        for i in fid["cargas"]:
+            valor = double(fid["cargas_val"][cont_2])
+            ret.agregar_fuerza(int(i[0]),int(i[1]),valor)
+            cont_2 += 1
+        
+        cont_3 = 0
+        for i in fid["restricciones"]:
+            valor_r = double(fid["restricciones_val"][cont_3])
+            ret.agregar_restriccion(int(i[0]),int(i[1]),valor_r)
+            cont_3 += 1
 
-            self.agregar_fuerza(nodo, gdl, val)
+        return ret
+
+    # def guardar(self, nombre):
+    #     import h5py
+
+    #     fid = h5py.File(nombre, "w")
+
+    #     fid["xyz"] = self.xyz
+
+    #     Nbarras = len(self.barras)
+    #     barras = np.zeros((Nbarras,2), dtype=np.int32)
+    #     secciones = fid.create_dataset("secciones", shape=(Nbarras,1), dtype=h5py.string_dtype())
+
+    #     for i, b in enumerate(self.barras):
+    #         barras[i,0] = b.ni
+    #         barras[i,1] = b.nj
+    #         secciones[i] = b.seccion.nombre()
+
+    #     fid["barras"] = barras
+
+    #     data_rest = fid.create_dataset("restricciones", (1,2), maxshape=(None,2), dtype=np.int32)
+    #     data_rest_val = fid.create_dataset("restricciones_val", (1,), maxshape=(None,), dtype=np.double)
+    #     nr = 0
+    #     for nodo in  self.restricciones:
+    #         for gdl, val in self.restricciones[nodo]:
+    #             data_rest.resize((nr+1,2))
+    #             data_rest_val.resize((nr+1,))
+    #             data_rest[nr, 0] = nodo
+    #             data_rest[nr, 1] = gdl
+    #             data_rest_val[nr] = val
+    #             nr += 1
+
+
+    #     data_cargas = fid.create_dataset("cargas", (1,2), maxshape=(None,2), dtype=np.int32)
+    #     data_cargas_val = fid.create_dataset("cargas_val", (1,), maxshape=(None,), dtype=np.double)
+    #     nr = 0
+    #     for nodo in  self.cargas:
+    #         for gdl, val in self.cargas[nodo]:
+    #             data_cargas.resize((nr+1,2))
+    #             data_cargas_val.resize((nr+1,))
+    #             data_cargas[nr, 0] = nodo
+    #             data_cargas[nr, 1] = gdl
+    #             data_cargas_val[nr] = val
+    #             nr += 1
+
+
+    # def abrir(self, nombre):
+
+    #     import h5py
+    #     from secciones import SeccionICHA
+    #     from barra import Barra
+
+    #     fid = h5py.File(nombre, "r")
+
+    #     xyz = fid["xyz"][:,:]
+
+    #     Nnodos = xyz.shape[0]
+
+    #     for i in range(Nnodos):
+    #         self.agregar_nodo(xyz[i,0], xyz[i,1], xyz[i,2])
+
+    #     barras = fid["barras"]
+    #     secciones = fid["secciones"]
+    #     cargas = fid["cargas"]
+    #     cargas_val = fid["cargas_val"]
+    #     restricciones = fid["restricciones"]
+    #     restricciones_val = fid["restricciones_val"]
+
+    #     Nbarras = fid["barras"].shape[0]
+
+    #     dict_secciones = {}
+
+    #     for i in range(Nbarras):
+    #         ni = barras[i,0]
+    #         nj = barras[i,1]
+
+    #         den = secciones[i][0]
+
+    #         if not den in dict_secciones:
+    #             dict_secciones[den] = SeccionICHA(den)
+
+    #         self.agregar_barra(Barra(ni,nj,dict_secciones[den]))
+            
+
+    #     for i in range(restricciones.shape[0]):
+    #         nodo = restricciones[i,0]
+    #         gdl = restricciones[i,1]
+    #         val = restricciones_val[i]
+
+    #         self.agregar_restriccion(nodo, gdl, val)
+
+    #     for i in range(cargas.shape[0]):
+    #         nodo = cargas[i,0]
+    #         gdl = cargas[i,1]
+    #         val = cargas_val[i]
+
+    #         self.agregar_fuerza(nodo, gdl, val)
 
 
     def __str__(self):

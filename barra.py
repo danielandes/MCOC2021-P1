@@ -55,8 +55,8 @@ class Barra(object):
         cosZ=(xj[2]-xi[2])/L
         TT=np.array([[-cosX], [-cosY], [-cosZ], [cosX], [cosY], [cosZ]])
         T=np.array([[-cosX, -cosY, -cosZ, cosX, cosY, cosZ],])
-        print (ni,nj,xi,xj,L,cosX,cosY,cosZ)
-        print (E_acero,self.seccion.area())
+        # print (ni,nj,xi,xj,L,cosX,cosY,cosZ)
+        # print (E_acero,self.seccion.area())
         ke=(self.seccion.area()*E_acero/L)*np.matmul(TT,T)
         #print(xi,xj,cosX,cosY,cosZ)
         return ke

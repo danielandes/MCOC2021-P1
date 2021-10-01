@@ -7,13 +7,14 @@ ret = Reticulado()
 ret.abrir("Grupo_06.h5")
 
 #Visualizar y comprobar las secciones
+ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.], factor_cargas=0.0)
+ret.resolver_sistema()
+f_D = ret.obtener_fuerzas()
+
 ret.ensamblar_sistema(factor_peso_propio=[0.,0.,0], factor_cargas=1.0)
 ret.resolver_sistema()
 f_L = ret.obtener_fuerzas()
 
-ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.], factor_cargas=0.0)
-ret.resolver_sistema()
-f_D = ret.obtener_fuerzas()
 
 
 #Visualizar f_L en el reticulado
@@ -73,6 +74,7 @@ ver_reticulado_3d(ret,
 
 
 
+print (ret)
 
 
 cumple = ret.chequear_diseño(fu, ϕ=0.9)
@@ -104,4 +106,5 @@ ver_reticulado_3d(ret,
 	opciones_barras=opciones_barras,
 	titulo="Factor Utilizacion")
 
-print (ret)
+print (f"Peso Total: {ret.calcular_peso_total()} kg")
+print (f"Peso Total: {ret.calcular_peso_total()/1000} ton")
