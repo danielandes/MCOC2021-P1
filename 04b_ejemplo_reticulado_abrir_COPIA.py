@@ -11,6 +11,9 @@ ret.ensamblar_sistema(factor_peso_propio=[0.,0.,0], factor_cargas=1.0)
 ret.resolver_sistema()
 f_L = ret.obtener_fuerzas()
 
+ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.], factor_cargas=0.0)
+ret.resolver_sistema()
+f_D = ret.obtener_fuerzas()
 
 
 #Visualizar f_L en el reticulado
@@ -100,3 +103,5 @@ ver_reticulado_3d(ret,
 	opciones_nodos=opciones_nodos, 
 	opciones_barras=opciones_barras,
 	titulo="Factor Utilizacion")
+
+print (ret)

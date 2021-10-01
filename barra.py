@@ -48,13 +48,15 @@ class Barra(object):
 
         xi = ret.xyz[ni,:]
         xj = ret.xyz[nj,:]
-	
+    
         L=self.calcular_largo(ret)
         cosX=(xj[0]-xi[0])/L
         cosY=(xj[1]-xi[1])/L
         cosZ=(xj[2]-xi[2])/L
         TT=np.array([[-cosX], [-cosY], [-cosZ], [cosX], [cosY], [cosZ]])
         T=np.array([[-cosX, -cosY, -cosZ, cosX, cosY, cosZ],])
+        print (ni,nj,xi,xj,L,cosX,cosY,cosZ)
+        print (E_acero,self.seccion.area())
         ke=(self.seccion.area()*E_acero/L)*np.matmul(TT,T)
         #print(xi,xj,cosX,cosY,cosZ)
         return ke
@@ -70,60 +72,24 @@ class Barra(object):
 
         xi = ret.xyz[ni,:]
         xj = ret.xyz[nj,:]
-	
+    
         L=self.calcular_largo(ret)
         cosX=(xj[0]-xi[0])/L
         cosY=(xj[1]-xi[1])/L
         cosZ=(xj[2]-xi[2])/L
         T=np.array([[-cosX, -cosY, -cosZ, cosX, cosY, cosZ],])
-        """Implementar"""	
+        """Implementar"""   
         u_e=np.array([ret.u[3*ni],ret.u[3*ni+1],ret.u[3*ni+2],ret.u[3*nj],ret.u[3*nj+1],ret.u[3*nj+2]])
         se=(self.seccion.area()*E_acero/self.calcular_largo(ret))*np.matmul(T,u_e)
         #print(se)
         
-<<<<<<< HEAD
-<<<<<<< HEAD
-        A = self.seccion.area()
-        L = self.calcular_largo(ret)
-<<<<<<< Updated upstream
-=======
-=======
         return float(se)
->>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
 
 
 
-<<<<<<< HEAD
-        Tθ = np.array([ -cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz ]).reshape((6,1))
-
-        return E_acero * A / L * (Tθ.T @ ue)
-
-
-
-
->>>>>>> Stashed changes
-=======
-        return float(se)
->>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
-
-
-
-
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-    def chequear_diseño(self, Fu, ret, ϕ=0.9):
-
->>>>>>> Stashed changes
-=======
-    def chequear_diseño(self, Fu, ret, ϕ=0.9):
-        
->>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
-=======
 
     def chequear_diseño(self, Fu, ret, ϕ=0.9):
         
->>>>>>> parent of 346dcd4 (Merge remote-tracking branch 'upstream/main' into main)
         area = self.seccion.area()
         peso = self.seccion.peso()
         inercia_xx = self.seccion.inercia_xx()
@@ -163,7 +129,7 @@ class Barra(object):
 
     def rediseñar(self, Fu, ret, ϕ=0.9):
         
-        """Implementar"""	
+        """Implementar"""   
         
 
 
