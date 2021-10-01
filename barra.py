@@ -75,6 +75,24 @@ class Barra(object):
         
         A = self.seccion.area()
         L = self.calcular_largo(ret)
+<<<<<<< Updated upstream
+=======
+
+        xi = ret.obtener_coordenada_nodal(self.ni)
+        xj = ret.obtener_coordenada_nodal(self.nj)
+
+        cosθx = (xj[0] - xi[0])/L
+        cosθy = (xj[1] - xi[1])/L
+        cosθz = (xj[2] - xi[2])/L
+
+        Tθ = np.array([ -cosθx, -cosθy, -cosθz, cosθx, cosθy, cosθz ]).reshape((6,1))
+
+        return E_acero * A / L * (Tθ.T @ ue)
+
+
+
+
+>>>>>>> Stashed changes
 
         xi = ret.obtener_coordenada_nodal(self.ni)
         xj = ret.obtener_coordenada_nodal(self.nj)
@@ -98,6 +116,11 @@ class Barra(object):
 
     def chequear_diseño(self, Fu, ret, ϕ=0.9, silence=False):
 
+<<<<<<< Updated upstream
+=======
+    def chequear_diseño(self, Fu, ret, ϕ=0.9):
+
+>>>>>>> Stashed changes
         area = self.seccion.area()
         peso = self.seccion.peso()
         inercia_xx = self.seccion.inercia_xx()

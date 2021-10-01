@@ -6,14 +6,8 @@ from math import sqrt
 from secciones import SeccionICHA
 
 
-L = 2.*m_
-H = 2.*m_
-B = 1.*m_
-
-#Inicializar modelo
 ret = Reticulado()
 
-#Nodos
 
 cero_x = 5.075777986710320100e+00*m_
 cero_y = 4.281724747887941618e+01*m_
@@ -118,6 +112,12 @@ ret.agregar_nodo(cero_x + 20*L,4, cero_y + L)  # 83
 #Secciones de las barras
 seccion_grande = SeccionICHA("[]350x150x37.8", color="#3A8431")#, debug=True)
 seccion_chica = SeccionICHA("[]80x40x8", color="#A3500B")
+seccion_chica = seccion_grande
+
+# chacra
+seccion_chica = SeccionICHA("H1100x350x400.4", color="#3A8431")#, debug=True)
+seccion_chica = SeccionICHA("H350x200x99.5", color="#3A8431")#, debug=True)
+# seccion_chica = SeccionICHA("H400x250x69.6", color="#3A8431")#, debug=True)
 
 
 #Crear y agregar las barras
@@ -168,13 +168,13 @@ ret.agregar_barra(Barra(40, 41, seccion_chica)) #39
 # triangulos
 
 
-ret.agregar_barra(Barra(0, 22, seccion_chica)) #39
-ret.agregar_barra(Barra(2, 24, seccion_chica)) #39
-ret.agregar_barra(Barra(4, 26, seccion_chica)) #39
-ret.agregar_barra(Barra(6, 28, seccion_chica)) #39
-ret.agregar_barra(Barra(8, 30, seccion_chica)) #39
-ret.agregar_barra(Barra(10, 32, seccion_chica)) #39
-ret.agregar_barra(Barra(12, 34, seccion_chica)) #39
+ret.agregar_barra(Barra(0, 22, seccion_chica)) #40
+ret.agregar_barra(Barra(2, 24, seccion_chica)) #41
+ret.agregar_barra(Barra(4, 26, seccion_chica)) #42
+ret.agregar_barra(Barra(6, 28, seccion_chica)) #43
+ret.agregar_barra(Barra(8, 30, seccion_chica)) #44
+ret.agregar_barra(Barra(10, 32, seccion_chica)) #45
+ret.agregar_barra(Barra(12, 34, seccion_chica)) #46
 ret.agregar_barra(Barra(14, 36, seccion_chica)) #39
 ret.agregar_barra(Barra(16, 38, seccion_chica)) #39
 ret.agregar_barra(Barra(18, 40, seccion_chica)) #39
@@ -187,7 +187,7 @@ ret.agregar_barra(Barra(32, 12, seccion_chica)) #39
 ret.agregar_barra(Barra(34, 14, seccion_chica)) #39
 ret.agregar_barra(Barra(36, 16, seccion_chica)) #39
 ret.agregar_barra(Barra(38, 18, seccion_chica)) #39
-ret.agregar_barra(Barra(40, 20, seccion_chica)) #39
+ret.agregar_barra(Barra(40, 20, seccion_chica)) #60
 
 # verticales
 
@@ -211,7 +211,7 @@ ret.agregar_barra(Barra(16, 37, seccion_chica)) #16
 ret.agregar_barra(Barra(17, 38, seccion_chica)) #17
 ret.agregar_barra(Barra(18, 39, seccion_chica)) #18
 ret.agregar_barra(Barra(19, 40, seccion_chica)) #19
-ret.agregar_barra(Barra(20, 41, seccion_chica)) #19
+ret.agregar_barra(Barra(20, 41, seccion_chica)) #80
 
 
 ## otro marco ##
@@ -235,7 +235,7 @@ ret.agregar_barra(Barra(57, 58, seccion_chica)) #35
 ret.agregar_barra(Barra(58, 59, seccion_chica)) #36
 ret.agregar_barra(Barra(59, 60, seccion_chica)) #37
 ret.agregar_barra(Barra(60, 61, seccion_chica)) #38
-ret.agregar_barra(Barra(61, 62, seccion_chica)) #39
+ret.agregar_barra(Barra(61, 62, seccion_chica)) #100
 
 
 ret.agregar_barra(Barra(63, 64, seccion_chica)) #20
@@ -410,13 +410,7 @@ ret.agregar_barra(Barra(39, 82, seccion_chica)) #37
 ret.agregar_barra(Barra(40, 83, seccion_chica)) #38
 
 
-
-
-
-# ret.agregar_barra(Barra(0, 33, seccion_chica)) #15
-# ret.agregar_barra(Barra(22, 11, seccion_chica)) #15
-
-
+##  RESTRICCIONES  ##
 
 
 
@@ -436,27 +430,134 @@ ret.agregar_restriccion(62, 2, 0)
 
 
 
-#Cargar el nodo 4 en la direccion 1 (Y)
-#ret.agregar_fuerza(4, 2, -100*KN_)
-
 #Visualizar y comprobar las secciones
 opciones_barras = {
-	"ver_secciones_en_barras": False,
+	# "ver_secciones_en_barras": True,
 	"color_barras_por_seccion": True,
-	"ver_numeros_de_barras":False
 }
-
 ver_reticulado_3d(ret,opciones_barras=opciones_barras)
 
+# exit(0)
 
 
 
-#Resolver el problema
-ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.])
+#Resolver el problema peso_propio
+ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.], factor_cargas=0.0)
 ret.resolver_sistema()
-f = ret.obtener_fuerzas()
+f_D = ret.obtener_fuerzas()
 
-#Ver todo el reticulado en texto
-print(ret)
+q = 400*kgf_/m_**2
 
-ret.guardar("PRUEBA_PUENTE.h5")
+F = 4*L*q
+
+#Agregar fuerzas tablero
+
+for i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61]:
+	ret.agregar_fuerza(i, 2, -F/2)
+
+ret.agregar_fuerza(0, 2, -F/4)
+ret.agregar_fuerza(20, 2, -F/4)
+ret.agregar_fuerza(42, 2, -F/4)
+ret.agregar_fuerza(62, 2, -F/4)
+
+
+#Resolver el problema peso_propio
+ret.ensamblar_sistema(factor_peso_propio=[0.,0.,0], factor_cargas=1.0)
+ret.resolver_sistema()
+f_L = ret.obtener_fuerzas()
+
+
+
+#Visualizar f_L en el reticulado
+opciones_nodos = {
+	"usar_posicion_deformada": False,
+}
+
+opciones_barras = {
+	"color_barras_por_dato": True,
+	"ver_dato_en_barras" : True,
+	"dato":f_L
+}
+
+ver_reticulado_3d(ret, 
+	opciones_nodos=opciones_nodos, 
+	opciones_barras=opciones_barras,
+	titulo="Carga Viva")
+
+
+#Visualizar f_L en el reticulado
+opciones_nodos = {
+	"usar_posicion_deformada": False,
+}
+
+opciones_barras = {
+	"color_barras_por_dato": True,
+	"ver_dato_en_barras" : True,
+	"dato":f_D
+}
+
+ver_reticulado_3d(ret, 
+	opciones_nodos=opciones_nodos, 
+	opciones_barras=opciones_barras,
+	titulo="Carga Muerta")
+
+
+#Calcular carga ultima (con factores de mayoracion)
+fu = 1.2*f_D + 1.6*f_L
+
+
+
+#Visualizar combinacion en el reticulado
+opciones_nodos = {
+	"usar_posicion_deformada": False,
+}
+
+opciones_barras = {
+	"color_barras_por_dato": True,
+	"ver_dato_en_barras" : True,
+	"dato":fu
+}
+
+ver_reticulado_3d(ret, 
+	opciones_nodos=opciones_nodos, 
+	opciones_barras=opciones_barras,
+	titulo="1.2D + 1.6L")
+
+
+
+
+
+cumple = ret.chequear_diseño(fu, ϕ=0.9)
+
+if cumple:
+	print(":)  El reticulado cumple todos los requisitos")
+else:
+	print(":(  El reticulado NO cumple todos los requisitos")
+
+#Calcular factor de utilizacion para las barras
+factores_de_utilizacion = ret.obtener_factores_de_utilizacion(fu, ϕ=0.9)
+
+
+#Visualizar FU en el reticulado
+opciones_nodos = {
+	"usar_posicion_deformada": False,
+	# "factor_amplificacion_deformada": 1.,
+}
+
+opciones_barras = {
+	"color_barras_por_dato": True,
+	"ver_dato_en_barras" : True,
+	"dato":factores_de_utilizacion
+}
+
+
+ver_reticulado_3d(ret, 
+	opciones_nodos=opciones_nodos, 
+	opciones_barras=opciones_barras,
+	titulo="Factor Utilizacion")
+
+
+ret.guardar("Grupo_06.h5")
+
+print (f"Peso Total: {ret.calcular_peso_total()} kg")
+print (f"Peso Total: {ret.calcular_peso_total()/1000} ton")
