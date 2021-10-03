@@ -10,10 +10,10 @@ Inicialmente para el diseño se consideraron como apoyos solo los 2 obligatorios
 Segundo Diseño
 
 Empezamos a probar con diferentes secciones para las diferentes barras.
-Barras horizontales: H350x200x81.1 (azules)
-Barras diagonales: []350x150x23 (rojas)
-Barras verticales: []250x100x10.8 (amarillas)
-Barras: que unen las caras: []100x50x6.5 (verdes)
+- Barras horizontales: H350x200x81.1 (azules)
+- Barras diagonales: []350x150x23 (rojas)
+- Barras verticales: []250x100x10.8 (amarillas)
+- Barras: que unen las caras: []100x50x6.5 (verdes)
 
 ![](https://github.com/VicenteOtaegui/MCOC2021-P1/blob/main/Puente_colores.png)
 
