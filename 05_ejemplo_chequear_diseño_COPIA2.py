@@ -563,12 +563,11 @@ ver_reticulado_3d(ret,
 
 
 ret.guardar("PRUEBA_2.h5")
-
+ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.], factor_cargas=1.0)
+ret.resolver_sistema()
+f = ret.obtener_fuerzas()
+print(ret)
 #print (ret)
-print(u_t)
-cont=0
-for i in u_t:
-    print("barra:",cont,"   d:",i)
-    cont+=1
+
 print (f"Peso Total: {ret.calcular_peso_total()} kg")
 print (f"Peso Total: {ret.calcular_peso_total()/1000} ton")
