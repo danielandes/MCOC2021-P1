@@ -15,5 +15,5 @@ Barras diagonales: []350x150x23 (rojas)
 Barras verticales: []250x100x10.8 (amarillas)
 Barras: que unen las caras: []100x50x6.5 (verdes)
 
-!
+![](https://github.com/VicenteOtaegui/MCOC2021-P1/blob/main/Puente_colores.png)
 
