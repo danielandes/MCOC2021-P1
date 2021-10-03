@@ -222,6 +222,7 @@ class Reticulado(object):
         
         cumple = True
         for i,b in enumerate(self.barras):
+            print("barra:",i)
             if not b.chequear_diseño(Fu[i], self, ϕ):
                 print(f"----> Barra {i} no cumple algun criterio. ")
                 cumple = False

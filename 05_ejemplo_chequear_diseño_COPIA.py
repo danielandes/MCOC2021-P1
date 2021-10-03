@@ -117,7 +117,7 @@ seccion_chica = seccion_grande
 # chacra
 seccion_chica = SeccionICHA("H1100x350x400.4", color="#3A8431")#, debug=True)
 seccion_chica = SeccionICHA("H350x200x99.5", color="#3A8431")#, debug=True)
-# seccion_chica = SeccionICHA("H400x250x69.6", color="#3A8431")#, debug=True)
+#seccion_chica = SeccionICHA("H400x250x69.6", color="#3A8431")#, debug=True)
 
 
 #Crear y agregar las barras
@@ -536,6 +536,7 @@ else:
 
 #Calcular factor de utilizacion para las barras
 factores_de_utilizacion = ret.obtener_factores_de_utilizacion(fu, ϕ=0.9)
+#print(factores_de_utilizacion)
 
 
 #Visualizar FU en el reticulado
@@ -559,7 +560,7 @@ ver_reticulado_3d(ret,
 
 ret.guardar("Grupo_06.h5")
 
-print (ret)
+#print (ret)
 
 print (f"Peso Total: {ret.calcular_peso_total()} kg")
 print (f"Peso Total: {ret.calcular_peso_total()/1000} ton")

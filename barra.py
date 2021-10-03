@@ -100,6 +100,7 @@ class Barra(object):
         Fn = area * σy_acero
 
         #Revisar resistencia nominal
+        print("uso:", abs((Fu/(ϕ*Fn)))*100)
         if abs(Fu) > ϕ*Fn:
             print(f"Resistencia nominal Fu = {Fu} ϕ*Fn = {ϕ*Fn}")
             return False
