@@ -445,7 +445,7 @@ ver_reticulado_3d(ret,opciones_barras=opciones_barras)
 ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.], factor_cargas=0.0)
 ret.resolver_sistema()
 f_D = ret.obtener_fuerzas()
-
+u_d=ret.u
 q = 400*kgf_/m_**2
 
 F = 4*L*q
@@ -465,8 +465,8 @@ ret.agregar_fuerza(62, 2, -F/4)
 ret.ensamblar_sistema(factor_peso_propio=[0.,0.,0], factor_cargas=1.0)
 ret.resolver_sistema()
 f_L = ret.obtener_fuerzas()
-
-
+u_l=ret.u
+u_t=u_d+u_l
 
 #Visualizar f_L en el reticulado
 opciones_nodos = {
@@ -561,6 +561,10 @@ ver_reticulado_3d(ret,
 ret.guardar("Grupo_06.h5")
 
 #print (ret)
-
+print(u_t)
+cont=0
+for i in u_t:
+    print("barra:",cont,"   d:",i)
+    cont+=1
 print (f"Peso Total: {ret.calcular_peso_total()} kg")
 print (f"Peso Total: {ret.calcular_peso_total()/1000} ton")
