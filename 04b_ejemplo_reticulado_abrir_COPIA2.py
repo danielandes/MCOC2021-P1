@@ -4,7 +4,7 @@ from graficar3d import ver_reticulado_3d
 #Inicializar modelo
 ret = Reticulado()
 
-ret.abrir("PRUEBA_2.h5")
+ret.abrir("Puente_Final_Grupo_06.h5")
 
 #Visualizar y comprobar las secciones
 ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.], factor_cargas=0.0)

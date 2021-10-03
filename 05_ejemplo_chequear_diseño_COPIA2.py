@@ -562,7 +562,7 @@ ver_reticulado_3d(ret,
 	titulo="Factor Utilizacion")
 
 
-ret.guardar("PRUEBA_2.h5")
+ret.guardar("Puente_Final_Grupo_06.h5")
 ret.ensamblar_sistema(factor_peso_propio=[0.,0.,-1.], factor_cargas=1.0)
 ret.resolver_sistema()
 f = ret.obtener_fuerzas()

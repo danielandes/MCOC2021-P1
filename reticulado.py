@@ -315,11 +315,10 @@ class Reticulado(object):
         for i in fid["barras"]:
             seccion = str(fid["secciones"][cont_1])
             seccion = seccion[1:]
-            seccion = seccion[1:]
             seccion = seccion[:-1]            
             seccion = seccion[1:]
             seccion = seccion[:-1]
-
+            print(seccion)
             if not seccion in dict_secciones:
                 dict_secciones[seccion] = SeccionICHA(str(seccion))
 
