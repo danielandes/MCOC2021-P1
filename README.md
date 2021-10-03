@@ -7,6 +7,7 @@ INFORME
 
 Primer Diseño 
 * Inicialmente para el diseño se consideraron como apoyos solo los 2 obligatorios, con barras uniendo estos dos puntos de forma horizontal. Donde luego se trazaron triangulos entre los nodos. Sin embargo este sistema generaba un mecanismo, por lo que añadimos barras verticales en todos los nodos y ademas para unir las dos caras del puente se consideraron barras diagonales. Este diseño es bastante simple, probamos con diversos tipos de secciones, en muchos las barras no resistian. Luego con la seccion H350x200x99.5 se obtuvo un puente funcional con un peso de 149367.0055377983 kg. 
+
 Se modifico el codigo para obtener los factores de uso como (Fu/(ϕ*Fn)*100 en %, de donde se obtuvo que las barras sometidas a mayores esfuerzos fueron las horizontales, con las barras superiores sometidas a un maximo de 26.11% y las inferiores a un maximo de 81.62%, ambos maximos coincidiendo con el medio del puente.
 
 Segundo Diseño
