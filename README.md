@@ -14,7 +14,7 @@ Primer Diseño
 Segundo Diseño
 * Se conservó la geometria del reticulado, se cambiaron las secciones en base a los factores de utilizacion de las barras segun su posición. Se reducieron las secciones para asi aprovechar al máximo el acero logrando reducir el peso considerablemente casi a una tercera parte del diseño incial. 
 * Se realizaron modificaciones de acuerdo a los usos del primer diseño para optimizar, logrando un uso maximo de 92.7% en las barras horizontales (azules) superiores, 81,79% maximo en las barras diagonales (rojas) y en general un mejor aprovechamiento de las resistencias de los materiales, sin embargo aun existen barras con usos menores al 1% las cuales no se pueden eliminar ya que generarian un mecanismo, por lo que se decidio darles secciones pequeñas pero realistas de acuerdo a las dimensiones de la estructura.
-*A medida que se optimizo el peso alcanzando mayores utilizaciones del material aumentaron las deformaciones, siendo la mas alta para la barra horizontal (azul) de -0.398 y la mas alta para una barra diagonal (roja) de -0.23. Sin embargo se nota que algunas de las barras verticales (amarilals) presentan deformaciones tan altas como 3.48 tras el cambio drastico de seccion.
+* A medida que se optimizo el peso alcanzando mayores utilizaciones del material aumentaron las deformaciones, siendo la mas alta para la barra horizontal (azul) de -0.398 y la mas alta para una barra diagonal (roja) de -0.23. Sin embargo se nota que algunas de las barras verticales (amarilals) presentan deformaciones tan altas como 3.48 tras el cambio drastico de seccion.
 
 Resultando en las siguientes secciones para las diferentes barras.
 - Barras horizontales: H350x200x81.1 (azules)
